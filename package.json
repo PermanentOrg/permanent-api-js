@@ -1,0 +1,22 @@
+{
+  "name": "permanent-api-js",
+  "version": "1.0.0",
+  "description": "REST API wrapper for Nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Permanent-Legacy-Foundation/permanent-api-js.git"
+  },
+  "author": "jerryongit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Permanent-Legacy-Foundation/permanent-api-js/issues"
+  },
+  "homepage": "https://github.com/Permanent-Legacy-Foundation/permanent-api-js#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
