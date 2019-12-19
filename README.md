@@ -20,14 +20,15 @@ The current API supports...
 ## Install
 
 This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/).
+[npm registry](https://www.npmjs.com/package/permanent-api-js).
 
 Before installing, [download and install Node.js](https://nodejs.org/en/download/).
 
 
     npm install permanent-api-js
     
-    After installing, create a file in server app root folder called envVars.txt. Add the API key to the file.
+    After installing, create a file in server app root folder 
+    called envVars.txt. Add the API key to the file.
     
     PERMANENTORG_APIKEY=your-api-from-support@permanent.org
 
@@ -72,7 +73,8 @@ permanent.addFile(filereq).then(function (saveres) {
 var permanent           = require('permanent-api-js');
 var file_archive_number ='xxxx-xxxx';
 
-permanent.getFile({ archive_number: file_archive_number }).then(function (permres) {
+permanent.getFile({ archive_number: file_archive_number })
+.then(function (permres) {
   if (permres.success) {
     var filedata = permres.data.record;
   }

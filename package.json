@@ -1,6 +1,6 @@
 {
   "name": "permanent-api-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "REST API wrapper for Nodejs",
   "main": "index.js",
   "scripts": {
