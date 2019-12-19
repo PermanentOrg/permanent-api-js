@@ -4,7 +4,7 @@
 A REST API wrapper for server-side javascript applications
 
 ## What is permanent?
-Permanent.org is a digital file preservation platform - built for all of humankind to archive their digital legacies, permanently. 
+[Permanent.org](https://www.permanent.org) is a trusted platform for individuals, families and small organizations that provides a secure and private environment to build and share archival quality history with family, friends, colleagues and the public, at their complete discretion. Permanent.org is the world’s first consumer-grade, secure cloud storage service backed by a 501(c)3 nonprofit organization: the Permanent Legacy Foundation.
 
 ## What can I do?
 The current API supports...
