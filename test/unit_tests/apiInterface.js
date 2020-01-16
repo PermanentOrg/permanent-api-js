@@ -15,7 +15,7 @@ before(function() {
 });
 
 it('is initialized', function () {
-  addContext(this, 'simple string');
+  addContext(this, 'test if the api is initialized properly');
   return assert.isTrue(permanent.Init);
 });
 
