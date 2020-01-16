@@ -6,14 +6,14 @@ var
   ;
 
 
-function permanent() {
+function permanent(apikey) {
 
-  if (!process.env.PERMANENTORG_APIKEY) {
+  if (!apikey && !process.env.PERMANENTORG_APIKEY) {
     throw 'PERMANENTORG_APIKEY is required in envVars.txt';
   }
 
   var app_instance = this;
-  var _API_KEY = process.env.PERMANENTORG_APIKEY;
+  var _API_KEY = apikey || process.env.PERMANENTORG_APIKEY;
   var apievents = {
     initfailed: 'permanent.initfailed',
     init: 'permanent.init'
@@ -49,7 +49,7 @@ function permanent() {
 
 
   function init() {
-    
+    app_instance.Init = true;
   }
 
 
@@ -208,4 +208,4 @@ permanent.prototype.File = function (info) {
 
 util.inherits(permanent, eventEmitter);
 
-module.exports = new permanent();
+module.exports = function(apikey){return new permanent(apikey);};
