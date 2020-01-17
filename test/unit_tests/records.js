@@ -29,31 +29,30 @@ describe('Records', function () {
       filehandle: 'permanent-logo'
     };
 
-    // console.log('record.file ' + util.inspect(record.file));
-
     permanent.addRecord(record).then(function (res) {
       assert.isTrue(res.success);
-      // {
-      //   success: true,
-      //   error: '',
-      //   message: '',
-      //   data: { record: { recordArchiveNumber: '06f9-000e' } }
-      // };
+      assert.isEmpty(res.error);
+      assert.isEmpty(res.message);
+      assert.isObject(res.data);
+      assert.isObject(res.data.record);
+      assert.isNotEmpty(res.data.record.recordArchiveNumber);
+      
       done();
     });
   });
 
 
-  it('permanent.getRecord() should return a record', function (done) {
-    // addContext(this,'some context');
-    assert.fail('not done');
-    // permanent.getRecord({ archive_number: '06f9-0006' }).then(function (res) {
-    //   console.log('end....');
-    //   // console.log(util.inspect(res));
-    //   assert.isTrue(res.success);
-    //   done();
-    // });
-  });
+  it('permanent.getRecord() should return a record');
+  // it('permanent.getRecord() should return a record', function (done) {
+  //   // addContext(this,'some context');
+  //   assert.fail('not done');
+  //   // permanent.getRecord({ archive_number: '06f9-0006' }).then(function (res) {
+  //   //   console.log('end....');
+  //   //   // console.log(util.inspect(res));
+  //   //   assert.isTrue(res.success);
+  //   //   done();
+  //   // });
+  // });
 
 
 });

@@ -13,16 +13,11 @@ before(function() {
   return assert.isTrue(permanent.Init);
 });
 
+it('permanent.addFolder() should add a folder');
 
-it('permanent.getFolder()', function () {
-  // addContext(this, 'simple string');
-  return assert.fail('not done');
-});
+it('permanent.getFolder() should get a folder');
 
-it('permanent.addFolder()', function () {
-  // addContext(this, 'simple string');
-  return assert.fail('not done');
-});
+it('permanent.deleteFolder() should delete a folder');
 
 
 });
