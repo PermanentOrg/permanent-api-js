@@ -6,7 +6,7 @@
   "scripts": {
     "unit_tests": "mocha './test/unit_tests/*.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
     "functional_tests": "mocha './test/functional_tests/*.js' --reporter mochawesome --reporter-options reportDir=test_results/functional_tests,reportFilename=functional_tests",
-    "test":"npm run-script unit_tests && npm run-script functional_tests"
+    "test": "npm run-script unit_tests && npm run-script functional_tests"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "mime-types": "^2.1.26",
     "mocha": "^7.0.0",
     "mochawesome": "^4.1.0"
   }

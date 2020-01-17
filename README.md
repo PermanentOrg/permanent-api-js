@@ -32,6 +32,15 @@ Before installing, [download and install Node.js](https://nodejs.org/en/download
     
     PERMANENTORG_APIKEY=your-api-from-support@permanent.org
 
+## Tests
+After downloading run the tests to see the results and learn about the interfaces.
+
+    Register with permanent.org and request an APIKEY
+    to see all greens.
+
+All Tests: npm test
+Unit Tests: npm run-script unit_tests
+Functional Tests: npm run-script functional_tests
 
 ## Usage
 

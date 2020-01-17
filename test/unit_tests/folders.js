@@ -13,7 +13,13 @@ before(function() {
   return assert.isTrue(permanent.Init);
 });
 
-it('getFolder', function () {
+
+it('permanent.getFolder()', function () {
+  // addContext(this, 'simple string');
+  return assert.fail('not done');
+});
+
+it('permanent.addFolder()', function () {
   // addContext(this, 'simple string');
   return assert.fail('not done');
 });

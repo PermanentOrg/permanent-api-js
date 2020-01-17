@@ -23,33 +23,37 @@ function permanent(apikey) {
   this.Init = false;
 
   var routes = {
-    archive:{
+    archive: {
       get: '/archive/get',
       create: '/archive/create',
       update: '/archive/update'
     },
-    record:{
+    record: {
       get: '/record/get',
-      add:'/record/add'
+      add: '/record/add'
     },
-    folder:{
+    folder: {
       get: '/folder/get',
-      add:'/folder/add'
+      add: '/folder/add'
     }
   };
 
-  
-  this.createArchive = createArchive;
 
+  this.createArchive = createArchive;
   this.getArchive = getArchive;
   this.updateArchive = updateArchive;
   this.deleteArchive = deleteArchive;
-  this.getFile = getFile;
-  this.addFile = addFile;
+
+  this.getRecord = getRecord;
+  this.addRecord = addRecord;
+
+  this.addFolder = addFolder;
+  this.getFolder = getFolder;
 
 
   function init() {
     app_instance.Init = true;
+
   }
 
 
@@ -73,14 +77,24 @@ function permanent(apikey) {
     return postMsg(routes.archive.delete, req);
   }
 
-  function getFile(data) {
+  function getRecord(data) {
     var req = prepRequest(data, true);
     return postMsg(routes.record.get, req);
   }
 
-  function addFile(data) {
+  function addRecord(data) {
     var req = prepRequest(data, true);
     return postMsg(routes.record.add, req);
+  }
+
+  function addFolder(data) {
+    var req = prepRequest(data, true);
+    return postMsg(routes.folder.add, req);
+  }
+
+  function getFolder(data) {
+    var req = prepRequest(data, true);
+    return postMsg(routes.folder.get, req);
   }
 
   function postMsg(route, msg) {
@@ -90,8 +104,8 @@ function permanent(apikey) {
     }
     return new Promise(function (resolve) {
       var clientResponse = new Response();
-      
-      var url = 'https://devapi.permanent.org'+ route;
+      // var url = 'http://localhost:9002'+ route;
+      var url = 'https://devapi.permanent.org' + route;
 
       var reqOptions = {
         preambleCRLF: true,
@@ -129,14 +143,16 @@ function permanent(apikey) {
     var formData;
     var ismultipart = reqOptions.url.includes(routes.record.add);
 
-    if (ismultipart && msg.data && msg.data.length > 0 ) {
+    if (ismultipart && msg.data && msg.data.length > 0) {
       formData = { payload: msg };
       var keys = Object.keys(formData.payload.data[0]);
       var prop;
       for (var di = 0; di < keys.length; di++) {
         prop = keys[di];
         if (formData.payload.data[0][prop] instanceof permanent.prototype.File) {
+          
           var file = formData.payload.data[0][prop];
+
           formData[file.fileInfo.filename] = {
             'value': fs.createReadStream(file.fileInfo.path),
             'options': {
@@ -172,7 +188,7 @@ function permanent(apikey) {
     return req;
   }
 
-  
+
 
 
 
@@ -208,4 +224,4 @@ permanent.prototype.File = function (info) {
 
 util.inherits(permanent, eventEmitter);
 
-module.exports = function(apikey){return new permanent(apikey);};
+module.exports = function (apikey) { return new permanent(apikey); };
