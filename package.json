@@ -4,10 +4,10 @@
   "description": "REST API wrapper for Nodejs",
   "main": "index.js",
   "scripts": {
-    "unit_tests": "mocha './test/unit_tests/*.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
-    "functional_tests": "mocha './test/functional_tests/*.js' --reporter mochawesome --reporter-options reportDir=test_results/functional_tests,reportFilename=functional_tests",
+    "unit_tests": "mocha './test/unit_tests/*/*.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
+    "functional_tests": "mocha './test/functional_tests/*/*.js' --reporter mochawesome --reporter-options reportDir=test_results/functional_tests,reportFilename=functional_tests",
     "test": "npm run-script unit_tests && npm run-script functional_tests",
-    "record-test": "mocha './test/unit_tests/records.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests"
+    "record-test": "mocha './test/unit_tests/records/**.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests"
   },
   "repository": {
     "type": "git",

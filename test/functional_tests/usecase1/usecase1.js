@@ -2,7 +2,8 @@
 var
 assert = require('chai').assert,
 addContext = require('mochawesome/addContext'),
-permanent=null
+permanent=null,
+config = require('../../config.json')
 ;
 
 
@@ -10,7 +11,7 @@ describe('Use Case 1', function () {
 
 before(function() {
   // runs before all tests in this block
-  permanent = require('../../index')('87f6e0344de0a8aea82fff2aa037');
+  permanent = require('../../../index')(config.apikey);
   return assert.isTrue(permanent.Init);
 });
 

@@ -6,20 +6,20 @@ var
   assert = require('chai').assert,
   addContext = require('mochawesome/addContext'),
   mime = require('mime-types'),
-  common = require('../common'),
-  config = require('../config.json'),
-  permanent = require('../../index')(config.apikey)
+  common = require('../../common'),
+  config = require('../../config.json'),
+  permanent = require('../../../index')(config.apikey)
   ;
 
 
-describe('Records', function () {
+describe('permanent.addRecord()', function () {
 
   before(function () {
     // runs before all tests in this block
     return assert.isTrue(permanent.Init);
   });
 
-  it.skip('permanent.addRecord() should upload a file', function (done) {
+  it.skip('should upload a file', function (done) {
     // addContext(this,'some context');
     var owner_permanent_archive_number = config.test_record_archnumber;
     var filepath = path.join(__dirname, '../assets/permanentlogo.png');
@@ -43,24 +43,6 @@ describe('Records', function () {
     });
   });
 
-  describe('permanent.getRecord()', function () {
-
-    it('should return a record for an arhchive number', function (done) {
-      // addContext(this,'some context');
-      permanent.getRecord({ archive_number: '0001-000a' }).then(function (res) {
-        assert.isTrue(res.success);
-        done();
-      });
-    });
-
-    it('should return false when no archive number', function (done) {
-      // addContext(this,'some context');
-      permanent.getRecord({ archive_number: '' }).then(function (res) {
-        assert.isFalse(res.success);
-        done();
-      });
-    });
-  });
 
 
 });

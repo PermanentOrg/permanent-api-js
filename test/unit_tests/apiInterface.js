@@ -2,7 +2,8 @@
 var
   assert = require('chai').assert,
   addContext = require('mochawesome/addContext'),
-  permanent = require('../../index')('87f6e0344de0a8aea82fff2aa037')
+  config=require('../config.json'),
+  permanent = require('../../index')(config.apikey)
   ;
 
 
