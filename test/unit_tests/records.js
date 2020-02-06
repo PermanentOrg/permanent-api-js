@@ -6,7 +6,9 @@ var
   assert = require('chai').assert,
   addContext = require('mochawesome/addContext'),
   mime = require('mime-types'),
-  permanent = require('../../index')('87f6e0344de0a8aea82fff2aa037')
+  common=require('../common'),
+  config=require('../config.json'),
+  permanent = require('../../index')(config.apikey)
   ;
 
 
@@ -19,7 +21,7 @@ describe('Records', function () {
 
   it('permanent.addRecord() should upload a file', function (done) {
     // addContext(this,'some context');
-    var owner_permanent_archive_number = '06fj-0000';
+    var owner_permanent_archive_number = config.test_record_archnumber;
     var filepath = path.join(__dirname, '../assets/permanentlogo.png');
     var thefileInfo = { filename: 'permanent-logo.png', path: filepath, mimetype: mime.lookup('.png') };
     var record = {
@@ -42,7 +44,7 @@ describe('Records', function () {
   });
 
 
-  it('permanent.getRecord() should return a record');
+//  it('permanent.getRecord() should return a record');
   // it('permanent.getRecord() should return a record', function (done) {
   //   // addContext(this,'some context');
   //   assert.fail('not done');

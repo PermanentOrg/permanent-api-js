@@ -3,8 +3,12 @@ var
   util = require('util'),
   assert = require('chai').assert,
   addContext = require('mochawesome/addContext'),
-  permanent = require('../../index')('87f6e0344de0a8aea82fff2aa037')
+  moment = require('moment'),
+  common=require('../common'),
+  config=require('../config.json'),
+  permanent = require('../../index')(config.apikey)
   ;
+
 
 
 describe('Archive', function () {
@@ -14,12 +18,13 @@ describe('Archive', function () {
     return assert.isTrue(permanent.Init);
   });
 
-  it.skip('permanent.createArchive() should create an archive', function (done) {
+  it('permanent.createArchive() should create an archive', function (done) {
     // addContext(this, 'given an archive number will return archive data');
-    var myarchive = { "name": "test-archive-116" };
+    var myarchive = { "name": "test-"+ moment().format('MM-DD-YYYY:hh:mm:ss')};
     permanent.createArchive(myarchive).then(function (permres) {
       assert.isTrue(permres.success);
       assert.isString(permres.data.archiveNbr, 'new archive number is: ' + permres.data.archiveNbr);
+      common.cache.archNumber=permres.data.archiveNbr;
       done();
     });
   });
