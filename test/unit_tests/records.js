@@ -6,8 +6,8 @@ var
   assert = require('chai').assert,
   addContext = require('mochawesome/addContext'),
   mime = require('mime-types'),
-  common=require('../common'),
-  config=require('../config.json'),
+  common = require('../common'),
+  config = require('../config.json'),
   permanent = require('../../index')(config.apikey)
   ;
 
@@ -19,7 +19,7 @@ describe('Records', function () {
     return assert.isTrue(permanent.Init);
   });
 
-  it('permanent.addRecord() should upload a file', function (done) {
+  it.skip('permanent.addRecord() should upload a file', function (done) {
     // addContext(this,'some context');
     var owner_permanent_archive_number = config.test_record_archnumber;
     var filepath = path.join(__dirname, '../assets/permanentlogo.png');
@@ -38,23 +38,29 @@ describe('Records', function () {
       assert.isObject(res.data);
       assert.isObject(res.data.record);
       assert.isNotEmpty(res.data.record.recordArchiveNumber);
-      
+
       done();
     });
   });
 
+  describe('permanent.getRecord()', function () {
 
-//  it('permanent.getRecord() should return a record');
-  // it('permanent.getRecord() should return a record', function (done) {
-  //   // addContext(this,'some context');
-  //   assert.fail('not done');
-  //   // permanent.getRecord({ archive_number: '06f9-0006' }).then(function (res) {
-  //   //   console.log('end....');
-  //   //   // console.log(util.inspect(res));
-  //   //   assert.isTrue(res.success);
-  //   //   done();
-  //   // });
-  // });
+    it('should return a record for an arhchive number', function (done) {
+      // addContext(this,'some context');
+      permanent.getRecord({ archive_number: '0001-000a' }).then(function (res) {
+        assert.isTrue(res.success);
+        done();
+      });
+    });
+
+    it('should return false when no archive number', function (done) {
+      // addContext(this,'some context');
+      permanent.getRecord({ archive_number: '' }).then(function (res) {
+        assert.isFalse(res.success);
+        done();
+      });
+    });
+  });
 
 
 });
