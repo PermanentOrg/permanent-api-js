@@ -19,10 +19,10 @@ describe('permanent.addRecord()', function () {
     return assert.isTrue(permanent.Init);
   });
 
-  it.skip('should upload a file', function (done) {
+  it('should upload a file', function (done) {
     // addContext(this,'some context');
     var owner_permanent_archive_number = config.test_record_archnumber;
-    var filepath = path.join(__dirname, '../assets/permanentlogo.png');
+    var filepath = path.join(__dirname, '../../assets/permanentlogo.png');
     var thefileInfo = {
       filename: 'permanent-logo.png',
       path: filepath,

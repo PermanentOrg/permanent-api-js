@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Permanent.org REST API</title>
+
+    <!--[if lt IE 9]><script src="js/html5shiv.js"></script><script src="js/respond.min.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/vendor/jquery.min.js"></script>
+    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+    <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="/vendor/lodash.min.js"></script>
+    <script type="text/javascript" src="/vendor/moment.min.js"></script>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/app.css">
+
+
+  </head>
+
+  <body class="p-lg">
+
+    <h1>Permanent.org REST API</h1>
+
+    <div class="main bt">
+      <div class="left pt-xl">
+        <ul>
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#start">Getting Started</a></li>
+          <li><a href="#accounts">Accounts</a></li>
+          <li><a href="#archives">Archives</a></li>
+          <li><a href="#records">Records</a></li>
+          <li><a href="#folders">Folders</a></li>
+          <li><a href="#terms">Terms</a></li>
+        </ul>
+      </div>
+      <div class="right p-lg bl">
+        <div class="page ">
+
+          <section id="intro">
+              <h2>Documentation Status: Early Preview</h2>
+            <article>
+              <p>
+                  This documentation is currently under development and is being released for early preview. 
+              </p>
+            </article>
+            <h2>Introduction</h2>
+            <article>
+              <p>
+                This guide is for developers who want to use the
+                <a href="https://www.permanent.org/" target="_blank">permanent.org</a>
+                REST API for Digital Preservation as a Service.
+              </p>
+              <p>
+                If would like to learn more about permanent.org,
+                <a href="https://www.permanent.org/what-we-do/" target="_blank">go here</a>.
+                To learn more about digital archives, <a href="https://www.permanent.org/digital-archives/"
+                  target="_blank">go here</a>.
+              </p>
+            </article>
+            <article>
+              <div class="text-bold">About this API reference</div>
+              <p class="">
+                This API reference is organized by resource type. Each resource type has one or more data
+                representations and one or more methods.
+              </p>
+              <br>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="text-bold">Resource</td>
+                    <td class="text-bold">Description</td>
+                  </tr>
+                </thead>
+                <tr>
+                  <td>Account</td>
+                  <td>needed</td>
+                </tr>
+                <tr>
+                  <td>Archive</td>
+                  <td>The primary resource for organizing content for a person, family, or organization.</td>
+                </tr>
+                <tr>
+                  <td>Records</td>
+                  <td>needed</td>
+                </tr>
+                <tr>
+                  <td>Folders</td>
+                  <td>needed</td>
+                </tr>
+
+              </table>
+            </article>
+
+          </section>
+
+          <section id="start" class="">
+            <h2>Getting Started</h2>
+
+            <article class="pt">
+              <p>
+                To get up to speed quickly, it's best to login to permanent.org and use the interface to become
+                familiar with archives and all of the exciting features available.
+              </p>
+              <div class="mb">Summary of how permanent.org works</div>
+              <p>
+                A person creates an account with an email address and password.
+                With an account, you can create archives for a person, family, or organization.
+                Files can then be uploaded to folders in an archive.
+              </p>
+              <div class="mb">Summary of how the API works</div>
+              <p>
+                The REST API currently supports basic features for creating archives, uploading and fetching records,
+                creating and fetching folders, as well as some basic account features.
+              </p>
+
+              <div class="mv">Let's begin</div>
+              <ol>
+                <li>Create an account on <a href="https://www.permanent.org/" target="_blank">permanent.org</a>.</li>
+                <li>Request an API key from permanent.org by contacting support@permanent.org</li>
+                <li>Use the API key supplied by permanent.org in your API calls.</li>
+              </ol>
+            </article>
+            <article class="mt-xl">
+              <div class="jumbotron ">
+                <div class="container">
+                  <div class="lead text-bold">About your API key</div>
+                  <p>
+                    <div class="text-bold">Keep your API key private and secure.</div>
+                    API keys are for making server side requests only.
+                    It should not be used in client side code where it would be publicly exposed.
+                  </p>
+                </div>
+              </div>
+            </article>
+            <article class="mt-xl">
+              <h4>How to use the REST API</h4>
+              <p>
+                Sending data always requires the HTTP Post method type sent using HTTPS.
+                The HTTP header Content-Type should be 'application/x-www-form-urlencoded' for most calls.
+                For sending files, use the Content-Type = 'multipart/form-data'.
+                All data sent in API requests must be JSON formatted strings set to a body variable called 'form';
+              </p>
+              <p>
+                <h5>The Request and Response Model</h5>
+                <p>
+                  ...about the model
+                </p>
+              </p>
+              <P>The structure of the request body.</P>
+              <p>
+                <pre>
+                      <code class="">
+                        body 
+                          form = 
+                              {
+                                apiKey:'string',
+                                data:{}            
+                              }
+                      </code>
+                </pre>
+              </p>
+              <p>
+                A simple example of an application/x-www-form-urlencoded request.
+              </p>
+              <p>
+                <pre>
+                      <code class="">
+                        POST /archive/add HTTP/1.1
+                        Host: api.permanent.org
+                        Content-Type: application/x-www-form-urlencoded
+                        Content-Length: 27
+                        
+                        form="{"apiKey":"your-apikey","data":{"fullname":"a-value","type":"person"}}"
+                </code>
+              </pre>
+              </p>
+
+              <p>
+                A simple example of an multipart/form-data request.
+              </p>
+              <p>
+                <pre>
+                        <code class="">
+
+                        POST /record/add HTTP/1.1 
+                        Host: api.permanent.org
+                        Content-Type: multipart/form-data;boundary="boundary" 
+                        
+                        --boundary 
+                        Content-Disposition: form-data; name="form" 
+                        
+                        "{"apiKey":"your-apikey","data":{"archiveNumber":"0000-0000","record_name":"my-file"},
+                        "file":{"name":"permanent-logo.png","contentType":"the-mime-type"}}" 
+
+                        --boundary 
+                        Content-Disposition: form-data; name="permanent-logo"; filename="permanent-logo.png" 
+                        
+                        the-file-byte-array
+                        --boundary--
+
+                   
+                  </code></pre>
+              </p>
+
+
+            </article>
+            <article>
+              <p>
+                This guide uses examples written in javascript for Node JS server side API calls.
+                However, you can create your API wrapper in the programming language of your choice.
+              </p>
+            </article>
+
+          </section>
+
+
+          <section id="accounts" class="mt-xl">
+            <h2>Accounts</h2>
+            <article>
+              aaaaa
+            </article>
+          </section>
+
+          <section id="archives">
+            <h2>Archives</h2>
+            <article>
+              <p class="mv">
+                An Archive is the primary resource for organizing content for a person, family, or organization.
+                An account can create as many Archives as they wish.
+              </p>
+              <br>
+              <br>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="text-bold">Methods</td>
+                    <td class="text-bold">Route</td>
+                    <td class="text-bold">Description</td>
+                  </tr>
+                </thead>
+                <tr>
+                  <td>add</td>
+                  <td>/archive/add</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>get</td>
+                  <td>/archive/get</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>delete</td>
+                  <td>/archive/delete</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>update</td>
+                  <td>/archive/update</td>
+                  <td></td>
+                </tr>
+
+              </table>
+            </article>
+            <article>
+              <br>
+              <br>
+
+              <article class="csecbck p">
+                <h5>add - /archive/add</h5>
+                <p>
+                  Add a new archive to an account.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>fullname</td>
+                        <td>string</td>
+                        <td>Required. The name of the archive.</td>
+                      </tr>
+                      <tr>
+                        <td>type</td>
+                        <td>string</td>
+                        <td>Required. Acceptible values are person,family, and organization.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>data.archiveNumber</td>
+                        <td>string</td>
+                        <td>The unique archive number.</td>
+                      </tr>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class=" bt">
+                    <div class="mv">
+                      <button type="button" data-code="archadd"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                <code id="archadd" class=""> 
+                    var req = {
+                      apiKey: config.apikey,
+                      data: {
+                        fullname: "My archive name",
+                        type: 'person'
+                      }
+                    };
+                
+                    send_HTTP_Post('/archive/add', req).then(function (response) {
+                      assert.isTrue(response.success);
+                      assert.isEmpty(response.error);
+                      assert.isEmpty(response.message);
+                      assert.isTrue(response.httpcode == 200);
+                      assert.isString(response.data.archiveNumber, 'new archive number is: ' + response.data.archiveNumber);
+                      done();
+                    });
+
+                </code>
+              </pre>
+                  </div>
+                </div>
+              </article>
+
+              <article class="csecbck p mt-xl">
+                <h5>get - /archive/get</h5>
+                <p>
+                  Get an archive.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>data.archiveNumber</td>
+                        <td>string</td>
+                        <td>The unique archive number.</td>
+                      </tr>
+                      <tr>
+                        <td>data.fullname</td>
+                        <td>string</td>
+                        <td>The name of the archive.</td>
+                      </tr>
+                      <tr>
+                        <td>data.thumbnails</td>
+                        <td>object</td>
+                        <td>A list of urls for thumbnail images of various sizes.</td>
+                      </tr>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class=" bt">
+                    <div class="mv">
+                      <button type="button" data-code="archget"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                  <code id="archget"> 
+                      var req = {
+                        apiKey: 'apikey',
+                        data: {
+                          archiveNumber: '0000-0000'
+                        }
+                      };
+                  
+                      send_HTTP_Post('/archive/get', req).then(function (response) {
+                        assert.isTrue(response.success);
+                        assert.isEmpty(response.error);
+                        assert.isEmpty(response.message);
+                        assert.isTrue(response.httpcode == 200);
+                        assert.isObject(response.data.archive);
+                        assert.isNotEmpty(response.data.archive.archiveNumber);
+                        assert.isNotEmpty(response.data.archive.fullname);
+                        assert.isNotEmpty(response.data.archive.thumbnails.thumbURL1000);
+                        assert.isNotEmpty(response.data.archive.thumbnails.thumbURL2000);
+                        assert.isNotEmpty(response.data.archive.thumbnails.thumbURL200);
+                        assert.isNotEmpty(response.data.archive.thumbnails.thumbURL500);
+                      
+                      });
+  
+                  </code>
+                </pre>
+                  </div>
+                </div>
+              </article>
+
+
+              <article class="csecbck p mt-xl">
+                <h5>delete - /archive/delete</h5>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <h5>Example</h5>
+                  <div class="bt">
+                    <div class="mv">
+                      <button type="button" data-code="archdel"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                  <code id="archdel"> 
+                      var req = {
+                        apiKey: 'apikey',
+                        data: {
+                          archiveNumber: res.data.archiveNumber
+                        }
+                      };
+                  
+                      send_HTTP_Post('/archive/delete', req).then(function (response) {
+                        assert.isTrue(response.success);
+                        assert.isEmpty(response.error);
+                        assert.isEmpty(response.message);
+                        assert.isTrue(response.httpcode == 200);
+                      });
+  
+                  </code>
+                </pre>
+                  </div>
+                </div>
+              </article>
+
+
+
+              <article class="csecbck p mt-xl">
+                <h5>update - /archive/update</h5>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <h5>Example</h5>
+                  <div class="bt">
+                    <div class="mv">
+                      <button type="button" data-code="archupdate"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                      <code id="archupdate"> 
+                          var req = {
+                            apiKey: config.apikey,
+                            data: {
+                              fullname: "My archive name",
+                              type: 'person'
+                            }
+                          };
+                      
+                          send_HTTP_Post('/archive/add', req).then(function (res) {
+                            assert.isTrue(res.success);
+                            assert.isString(res.data.archiveNumber, 'new archive number is: ' + res.data.archiveNumber);
+                            done();
+                          });
+      
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              </article>
+
+            </article>
+          </section>
+
+
+          <section id="records">
+            <h2>Records</h2>
+            <article>
+              <p class="mv">
+                A record is....has a paNumber
+              </p>
+              <br>
+              <br>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="text-bold">Methods</td>
+                    <td class="text-bold">Route</td>
+                    <td class="text-bold">Description</td>
+                  </tr>
+                </thead>
+                <tr>
+                  <td>add</td>
+                  <td>/record/add</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>get</td>
+                  <td>/record/get</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>delete</td>
+                  <td>/record/delete</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>update</td>
+                  <td>/record/update</td>
+                  <td></td>
+                </tr>
+
+              </table>
+            </article>
+            <article>
+              <br>
+              <br>
+              <article class="csecbck p">
+                <h5>add - /record/add</h5>
+                <p>
+                  Add a record to an archive.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td class="fw500">archive</td>
+                        <td>object</td>
+                        <td>
+                          <!-- <div class="mb">
+                            <span class="fw500">paNumber</span>
+                            <span class="typreq">Type: string; Is Required</span>
+                          </div>
+                          <div>The archive's PA Number</div> -->
+                        </td>
+                      </tr>
+                      <tr>
+                          <td class="fw500 pl-lg">- paNumber</td>
+                          <td>string</td>
+                        <td>
+                          <div>Required</div>
+                            <div>The archive's PA Number</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">record</td>
+                        <td>object</td>
+                        <td>
+                          <!-- <div class="bb mb">
+                            <div class="mb">
+                              <span class="fw500">name</span>
+                              <span class="typreq">Type: string; Not Required</span>
+                            </div>
+                            <div>A user entered name of the file.</div>
+                          </div>
+                          <div class="bb mb">
+                            <div class="mb">
+                              <span class="fw500">description</span>
+                              <span class="typreq">Type: string; Not Required</span>
+                            </div>
+                            <div>A user entered description of the file.</div>
+                          </div>
+                          <div class="mb">
+                            <div class="mb">
+                              <span class="fw500">location</span>
+                              <span class="typreq">Type: object; Not Required</span>
+                            </div>
+                            <div>Geolocation data for the file.</div>
+                            <div class="pl">
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">name</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div>Name of location e.g. Home or Office.</div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">streetNumber</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">streetName</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">postalCode</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">locality</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">adminOneName</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">adminOneCode</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">adminTwoName</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">adminTwoCode</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">country</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">countryCode</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="bb mb p">
+                                <div class="mb">
+                                  <span class="fw500">latitude</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                              <div class="mb p">
+                                <div class="mb">
+                                  <span class="fw500">longitude</span>
+                                  <span class="typreq">Type: string; Not Required</span>
+                                </div>
+                                <div></div>
+                              </div>
+                            </div>
+                          </div> -->
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- name</td>
+                        <td>string</td>
+                        <td>
+                              <div>Not Required</div>
+                              <div>A user entered name of the file.</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">file</td>
+                        <td>object</td>
+                        <td>
+                          <div class="bb mb">
+                            <div class="mb">
+                              <span class="fw500">name</span>
+                              <span class="typreq">Type: string; Not Required</span>
+                            </div>
+                            <div>The upload file name with extension.</div>
+                          </div>
+                        </td>
+                      </tr>
+
+                    </table>
+                    <p class="b p-lg text-italic">
+                      The contents of the file must be sent along with the post as multipart/form-data.
+                    </p>
+                  </p>
+                  <br><br>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>data.archiveNumber</td>
+                        <td>string</td>
+                        <td>The unique archive number.</td>
+                      </tr>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <br><br>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class="bt">
+                    <div class="mv">
+                      <button type="button" data-code="addrecord"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                    <code id="addrecord" class=""> 
+                      var req = {
+                        apiKey: config.apikey,
+                        data: {
+                          archive: {
+                            paNumber: 'the_archive_paNumber'
+                          },
+                          record: {
+                            name: 'permanent-logo',
+                            description: 'a description of the record',
+                            location: {
+                              displayName: 'home',
+                              streetNumber: '4611',
+                              streetName: 'Bee Caves Road',
+                              postalCode: '78746',
+                              locality: 'West Lake Hills',
+                              adminOneName: 'Texas',
+                              adminOneCode: 'TX',
+                              adminTwoName: 'Travis County',
+                              adminTwoCode: 'Travis County',
+                              country: 'United States',
+                              countryCode: 'US',
+                              latitude: '30.286603',
+                              longitude: '-97.814744'
+                            }
+                          }
+                        },
+                        file: {
+                          name: "permanent-logo.png"
+                        }
+                      };
+                    
+                        //here you need to send as Content-Type: multipart/form-data;
+                        //be sure to include the file in the post body
+
+                        var filepath ='path_to_my_file.txt';
+
+                        send_HTTP_Multipart_form_Post('/record/add',filepath, req).then(function (res) {
+                          assert.isTrue(res.success);
+                          assert.isTrue(res.httpcode==200);
+                          assert.isEmpty(res.error);
+                          assert.isEmpty(res.message);
+                          assert.isObject(res.data);
+                          assert.isObject(res.data.record);
+                          assert.isNotEmpty(res.data.record.archiveNumber);
+                          assert.isString(res.data.record.paNumber, 'new archive number is: ' + res.data.record.paNumber);
+                        
+                        });
+    
+                    </code>
+                  </pre>
+                  </div>
+                </div>
+              </article>
+
+              <article class="csecbck p mt-xl">
+                <h5>get - /record/get</h5>
+                <p>
+                  Get a record.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>data.paNumber</td>
+                        <td>string</td>
+                        <td>The unique archive number.</td>
+                      </tr>
+                      <tr>
+                        <td>data.fullname</td>
+                        <td>string</td>
+                        <td>The name of the archive.</td>
+                      </tr>
+                      <tr>
+                        <td>data.thumbnails</td>
+                        <td>object</td>
+                        <td>A list of urls for thumbnail images of various sizes.</td>
+                      </tr>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class=" bt">
+                    <div class="mv">
+                      <button type="button" data-code="recget"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                      <code id="recget"> 
+                          var req = {
+                            apiKey: 'apikey',
+                            data: {
+                              archiveNumber: '0000-0000'
+                            }
+                          };
+                      
+                          send_HTTP_Post('/archive/get', req).then(function (response) {
+                            assert.isTrue(response.success);
+                            assert.isEmpty(response.error);
+                            assert.isEmpty(response.message);
+                            assert.isTrue(response.httpcode == 200);
+                            assert.isObject(response.data.archive);
+                            assert.isNotEmpty(response.data.archive.paNumber);
+                            assert.isNotEmpty(response.data.archive.fullname);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL1000);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL2000);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL200);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL500);
+                          
+                          });
+      
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              </article>
+
+
+              <article class="csecbck p mt-xl">
+                <h5>delete - /record/delete</h5>
+                <p>
+                  Delete a record.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <h5>Example</h5>
+                  <div class="bt">
+                    <div class="mv">
+                      <button type="button" data-code="recdel"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                      <code id="recdel"> 
+                          var req = {
+                            apiKey: 'apikey',
+                            data: {
+                              archiveNumber: res.data.paNumber
+                            }
+                          };
+                      
+                          send_HTTP_Post('/archive/delete', req).then(function (response) {
+                            assert.isTrue(response.success);
+                            assert.isEmpty(response.error);
+                            assert.isEmpty(response.message);
+                            assert.isTrue(response.httpcode == 200);
+                          });
+      
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              </article>
+
+
+
+              <article class="csecbck p mt-xl">
+                <h5>update - /record/update</h5>
+                <p>
+                  Update a record.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <h5>Example</h5>
+                  <div class="bt">
+                    <div class="mv">
+                      <button type="button" data-code="recup"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                          <code id="recup"> 
+                              var req = {
+                                apiKey: config.apikey,
+                                data: {
+                                  fullname: "My archive name",
+                                  type: 'person'
+                                }
+                              };
+                          
+                              send_HTTP_Post('/archive/add', req).then(function (res) {
+                                assert.isTrue(res.success);
+                                assert.isString(res.data.archiveNumber, 'new archive number is: ' + res.data.archiveNumber);
+                                done();
+                              });
+          
+                          </code>
+                        </pre>
+                  </div>
+                </div>
+              </article>
+
+            </article>
+          </section>
+
+          <section id="folders">
+            <h2>Folders</h2>
+            <article>
+              <p class="mv">
+                An folder is....
+              </p>
+              <br>
+              <br>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="text-bold">Methods</td>
+                    <td class="text-bold">Route</td>
+                    <td class="text-bold">Description</td>
+                  </tr>
+                </thead>
+                <tr>
+                  <td>add</td>
+                  <td>/folder/add</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>get</td>
+                  <td>/folder/get</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>delete</td>
+                  <td>/folder/delete</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>update</td>
+                  <td>/folder/update</td>
+                  <td></td>
+                </tr>
+
+              </table>
+            </article>
+            <article>
+              <br>
+              <br>
+              <article class="csecbck p">
+                <h5>add - /folder/add</h5>
+                <p>
+                  Add a new folder to an archive.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>fullname</td>
+                        <td>string</td>
+                        <td>Required. The name of the archive.</td>
+                      </tr>
+                      <tr>
+                        <td>type</td>
+                        <td>string</td>
+                        <td>Required. Acceptible values are person,family, and organization.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>data.archiveNumber</td>
+                        <td>string</td>
+                        <td>The unique archive number.</td>
+                      </tr>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class=" bt">
+                    <div class="mv">
+                      <button type="button" data-code="folderadd"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                    <code id="folderadd"> 
+                        var req = {
+                          apiKey: config.apikey,
+                          data: {
+                            fullname: "My archive name",
+                            type: 'person'
+                          }
+                        };
+                    
+                        send_HTTP_Post('/archive/add', req).then(function (response) {
+                          assert.isTrue(response.success);
+                          assert.isEmpty(response.error);
+                          assert.isEmpty(response.message);
+                          assert.isTrue(response.httpcode == 200);
+                          assert.isString(response.data.archiveNumber, 'new archive number is: ' + response.data.archiveNumber);
+                          done();
+                        });
+    
+                    </code>
+                  </pre>
+                  </div>
+                </div>
+              </article>
+
+              <article class="csecbck p mt-xl">
+                <h5>get - /folder/get</h5>
+                <p>
+                  Get a folder.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>data.archiveNumber</td>
+                        <td>string</td>
+                        <td>The unique archive number.</td>
+                      </tr>
+                      <tr>
+                        <td>data.fullname</td>
+                        <td>string</td>
+                        <td>The name of the archive.</td>
+                      </tr>
+                      <tr>
+                        <td>data.thumbnails</td>
+                        <td>object</td>
+                        <td>A list of urls for thumbnail images of various sizes.</td>
+                      </tr>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class=" bt">
+                    <div class="mv">
+                      <button type="button" data-code="folderget"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                      <code id="folderget"> 
+                          var req = {
+                            apiKey: 'apikey',
+                            data: {
+                              archiveNumber: '0000-0000'
+                            }
+                          };
+                      
+                          send_HTTP_Post('/archive/get', req).then(function (response) {
+                            assert.isTrue(response.success);
+                            assert.isEmpty(response.error);
+                            assert.isEmpty(response.message);
+                            assert.isTrue(response.httpcode == 200);
+                            assert.isObject(response.data.archive);
+                            assert.isNotEmpty(response.data.archive.archiveNumber);
+                            assert.isNotEmpty(response.data.archive.fullname);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL1000);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL2000);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL200);
+                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL500);
+                          
+                          });
+      
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              </article>
+
+
+              <article class="csecbck p mt-xl">
+                <h5>delete - /folder/delete</h5>
+                <p>
+                  Delete a folder.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <h5>Example</h5>
+                  <div class="bt">
+                    <div class="mv">
+                      <button type="button" data-code="folderdel"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                      <code id="folderdel"> 
+                          var req = {
+                            apiKey: 'apikey',
+                            data: {
+                              archiveNumber: res.data.archiveNumber
+                            }
+                          };
+                      
+                          send_HTTP_Post('/archive/delete', req).then(function (response) {
+                            assert.isTrue(response.success);
+                            assert.isEmpty(response.error);
+                            assert.isEmpty(response.message);
+                            assert.isTrue(response.httpcode == 200);
+                          });
+      
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              </article>
+
+
+
+              <article class="csecbck p mt-xl">
+                <h5>update - /folder/update</h5>
+                <p>
+                  Update a folder.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>archiveNumber</td>
+                        <td>string</td>
+                        <td>Required. The archive number for the archive.</td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>success</td>
+                        <td>boolean</td>
+                        <td>true or false</td>
+                      </tr>
+                      <tr>
+                        <td>error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td>message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td>httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <h5>Example</h5>
+                  <div class="bt">
+                    <div class="mv">
+                      <button type="button" data-code="folderup"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                          <code id="folderup"> 
+                              var req = {
+                                apiKey: config.apikey,
+                                data: {
+                                  fullname: "My archive name",
+                                  type: 'person'
+                                }
+                              };
+                          
+                              send_HTTP_Post('/archive/add', req).then(function (res) {
+                                assert.isTrue(res.success);
+                                assert.isString(res.data.archiveNumber, 'new archive number is: ' + res.data.archiveNumber);
+                                done();
+                              });
+          
+                          </code>
+                        </pre>
+                  </div>
+                </div>
+              </article>
+
+            </article>
+          </section>
+
+          <section id="terms">
+            <h2>Terms</h2>
+            <article>
+              <p>
+                <h5>Account</h5>
+                <p>is...</p>
+              </p>
+              <p class="mt-xl">
+                <h5>Archive</h5>
+                <p>is...</p>
+              </p>
+              <p class="mt-xl">
+                <h5>File</h5>
+                <p>is...</p>
+              </p>
+              <p class="mt-xl">
+                <h5>Folder</h5>
+                <p>is...</p>
+              </p>
+              <p class="mt-xl">
+                <h5>Record</h5>
+                <p>is...</p>
+              </p>
+              <p class="mt-xl">
+                <h5>PA Number</h5>
+                <p>is...</p>
+              </p>
+
+            </article>
+          </section>
+
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      $(document).ready(setup);
+
+      function setup() {
+
+        $('.btn-copy').on('click', copyToClipBoard);
+      }
+
+
+      function copyToClipBoard(evt) {
+        var codeblock = $(evt.target).attr('data-code');
+        var copyText = document.getElementById(codeblock);
+        try {
+          const el = document.createElement('textarea');
+          el.value = copyText.textContent;
+          document.body.appendChild(el);
+          el.select();
+          var res = document.execCommand('copy');
+          document.body.removeChild(el);
+
+          var btntxt = $(evt.target).text();
+          $(evt.target).text('Copied!');
+          setTimeout(function () {
+            $(evt.target).text(btntxt);
+          }, 2000);
+
+        }
+        catch (err) {
+          var ss = err;
+        }
+      }
+    </script>
+
+
+
+  </body>
+
+</html>
