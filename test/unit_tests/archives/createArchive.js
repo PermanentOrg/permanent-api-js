@@ -18,7 +18,7 @@ describe('permanent.createArchive()', function () {
     return assert.isTrue(permanent.Init);
   });
 
-  it.skip('should create an archive given a name', function (done) {
+  it('should create an archive given a name', function (done) {
     // addContext(this, 'given an archive number will return archive data');
     var myarchive = { "name": "test-"+ moment().format('MM-DD-YYYY:hh:mm:ss')};
     permanent.createArchive(myarchive).then(function (permres) {

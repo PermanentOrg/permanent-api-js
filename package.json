@@ -7,7 +7,8 @@
     "unit_tests": "mocha './test/unit_tests/*/*.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
     "functional_tests": "mocha './test/functional_tests/*/*.js' --reporter mochawesome --reporter-options reportDir=test_results/functional_tests,reportFilename=functional_tests",
     "test": "npm run-script unit_tests && npm run-script functional_tests",
-    "record-test": "mocha './test/unit_tests/records/**.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests"
+    "record-test": "mocha './test/unit_tests/records/**.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
+    "arch-add-test": "mocha './test/unit_tests/archives/createArchive.js' "
   },
   "repository": {
     "type": "git",

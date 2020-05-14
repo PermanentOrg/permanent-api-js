@@ -12,23 +12,36 @@
       "args": [
         "--timeout",
         "999999",
-          "${workspaceFolder}/test/unit_tests/*.js"
+        "${workspaceFolder}/test/unit_tests/*.js"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
-  },
-  {
-    "type": "node",
-    "request": "launch",
-    "name": "Debug Record Unit Tests",
-    "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-    "args": [
-      "--timeout",
-      "999999",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Record Unit Tests",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--timeout",
+        "999999",
         "${workspaceFolder}/test/unit_tests/records/addRecord.js"
-    ],
-    "console": "integratedTerminal",
-    "internalConsoleOptions": "neverOpen"
-}
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Archive Create ",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--timeout",
+        "999999",
+        "${workspaceFolder}/test/unit_tests/archives/createArchive.js"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
   ]
 }
