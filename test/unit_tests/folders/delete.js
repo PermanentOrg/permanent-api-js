@@ -58,7 +58,6 @@ describe('/folder/delete', function () {
 
       //then get the new folder
       var req = {
-        apiKey: config.apikey,
         data: {
           folder: {
             paNumber: '0004-0006',
