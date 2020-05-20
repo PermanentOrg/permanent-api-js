@@ -21,11 +21,10 @@
 
 
     "record-test": "mocha './test/unit_tests/records/**.js' --timeout 60000 --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
-    "record-add-test": "mocha './test/unit_tests/records/add.js' ",
-    "record-del-test": "mocha './test/unit_tests/records/delete.js' ",
-    "record-get-test": "mocha './test/unit_tests/records/get.js' ",
-    "record-update-test": "mocha './test/unit_tests/records/update.js' ",
-    
+    "record-add": "mocha './test/unit_tests/records/add.js' ",
+    "record-get": "mocha './test/unit_tests/records/get.js' ",
+    "record-update": "mocha './test/unit_tests/records/update.js' ",
+    "record-del": "mocha './test/unit_tests/records/delete.js' ",
 
     "actions-move": "mocha './test/unit_tests/actions/move.js' --timeout 60000 ",
     "actions-copy": "mocha './test/unit_tests/actions/copy.js' --timeout 60000 ",

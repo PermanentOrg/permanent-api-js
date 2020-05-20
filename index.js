@@ -93,6 +93,30 @@ function permanent(apikey) {
     return post(routes.folder.delete, msg);
   }
 
+  
+  this.record = {
+    get: getRecord,
+    add: addRecord,
+    delete:deleteRecord,
+    update:updateRecord
+  };
+
+  function getRecord(msg) {
+    return post(routes.record.get, msg);
+  }
+  function addRecord(msg) {
+    return postMultiPart(routes.record.add, msg);
+  }
+  function deleteRecord(msg) {
+    return post(routes.record.delete, msg);
+  }
+  function updateRecord(msg) {
+    return post(routes.record.update, msg);
+  }
+  
+
+  
+
 
   function init() {
     app_instance.Init = true;
