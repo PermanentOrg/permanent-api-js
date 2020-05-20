@@ -33,12 +33,25 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Archive Create ",
+      "name": "Archive Add ",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
         "--timeout",
         "999999",
-        "${workspaceFolder}/test/unit_tests/archives/createArchive.js"
+        "${workspaceFolder}/test/unit_tests/archives/add.js"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Archive Get ",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--timeout",
+        "999999",
+        "${workspaceFolder}/test/unit_tests/archives/get.js"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

@@ -4,38 +4,104 @@ var
   assert = require('chai').assert,
   addContext = require('mochawesome/addContext'),
   moment = require('moment'),
-  common=require('../../common'),
-  config=require('../../config.json'),
+  common = require('../../common'),
+  config = require('../../config.json'),
   permanent = require('../../../index')(config.apikey)
   ;
 
 
 
-describe('permanent.createArchive()', function () {
 
-  before(function () {
-    // runs before all tests in this block
-    return assert.isTrue(permanent.Init);
-  });
+describe('/archive/add', function () {
 
-  it('should create an archive given a name', function (done) {
-    // addContext(this, 'given an archive number will return archive data');
-    var myarchive = { "name": "test-"+ moment().format('MM-DD-YYYY:hh:mm:ss')};
-    permanent.createArchive(myarchive).then(function (permres) {
-      assert.isTrue(permres.success);
-      assert.isString(permres.data.archiveNbr, 'new archive number is: ' + permres.data.archiveNbr);
-      common.cache.archNumber=permres.data.archiveNbr;
+  it('should create a person archive', function (done) {
+    var req = {
+      data: {
+        fullname: "test-" + moment().format('MM-DD-YYYY:hh:mm:ss'),
+        type: 'person'
+      }
+    };
+
+    permanent.archive.add(req).then(function (response) {
+      var res = response.data;
+      assert.isTrue(response.statusCode == 200);
+      assert.isTrue(res.success);
+      assert.isString(res.data.paNumber, 'new archive number is: ' + res.data.paNumber);
+      assert.isEmpty(res.error);
+      assert.isEmpty(res.message);
+      assert.isTrue(res.httpcode == '200');
       done();
     });
+
   });
 
-  it('should return false when no name given');
-  // permanent.getArchive({archive_number: '06fj-0000'}).then(function(res){
-  //   console.log('end....');
-  //   // console.log(util.inspect(res));
-  //   assert.isTrue(res.success);
-  //   done();
-  // });
+  it('should return false when no name given', function (done) {
+    var req = {
+      data: {
+        fullname: '',
+        type: 'person'
+      }
+    };
+
+    permanent.archive.add(req).then(function (response) {
+      var res = response.data;
+      assert.isTrue(response.statusCode == 400);
+      assert.isFalse(res.success);
+      assert.isNotEmpty(res.error);
+      assert.isTrue(res.httpcode == '400');
+      done();
+    });
+
+  });
+
+  //not supported yet
+  it.skip('should create a family archive', function (done) {
+    // this.timeout(500);
+
+    var req = {
+      apiKey: config.apikey,
+      data: {
+        fullname: "family-" + moment().format('MM-DD-YYYY:hh:mm:ss'),
+        type: 'family'
+      }
+    };
+
+    reqHlp.testPostForm('/archive/add', req).then(function (response) {
+      var res = response.data;
+      assert.isTrue(response.statusCode == 200);
+      assert.isTrue(res.success);
+      assert.isEmpty(res.error);
+      assert.isEmpty(res.message);
+      assert.isTrue(res.httpcode == '200');
+      assert.isString(res.data.paNumber, 'new archive number is: ' + res.data.paNumber);
+      done();
+    });
+
+  });
+
+  //not supported yet
+  it.skip('should create a organization archive', function (done) {
+    var req = {
+      apiKey: config.apikey,
+      data: {
+        fullname: "organization-" + moment().format('MM-DD-YYYY:hh:mm:ss'),
+        type: 'organization'
+      }
+    };
+
+    reqHlp.testPostForm('/archive/add', req).then(function (response) {
+      var res = response.data;
+      assert.isTrue(response.statusCode == 200);
+      assert.isTrue(res.success);
+      assert.isEmpty(res.error);
+      assert.isEmpty(res.message);
+      assert.isTrue(res.httpcode == '200');
+      assert.isString(res.data.paNumber, 'new archive number is: ' + res.data.paNumber);
+      done();
+    });
+
+  });
+
 
 
 });

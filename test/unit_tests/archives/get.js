@@ -14,9 +14,8 @@ describe('/archive/get', function () {
 
   it('should fetch an archive given an archive number', function (done) {
     var req = {
-      apiKey: config.apikey,
       data: {
-        paNumber: '00v1-0000'  
+        paNumber: '0001-0000'  
       }
     };
 
@@ -46,15 +45,14 @@ describe('/archive/get', function () {
 
   });
 
-  it.skip('should return false when no archive number', function (done) {
+  it('should return false when no archive number', function (done) {
     var req = {
-      apiKey: config.apikey,
       data: {
-        paNumber:''
+        paNumber: ''  
       }
     };
 
-    reqHlp.testPostForm('/archive/get', req).then(function (response) {
+    permanent.archive.get(req).then(function (response) {
       var res = response.data;
       assert.isTrue(response.statusCode == 400);
       assert.isTrue(res.httpcode == '400');

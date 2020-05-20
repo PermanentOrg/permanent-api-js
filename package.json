@@ -7,8 +7,27 @@
     "unit_tests": "mocha './test/unit_tests/*/*.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
     "functional_tests": "mocha './test/functional_tests/*/*.js' --reporter mochawesome --reporter-options reportDir=test_results/functional_tests,reportFilename=functional_tests",
     "test": "npm run-script unit_tests && npm run-script functional_tests",
-    "record-test": "mocha './test/unit_tests/records/**.js' --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
-    "arch-add-test": "mocha './test/unit_tests/archives/createArchive.js' "
+    
+    
+    "arch-add": "mocha './test/unit_tests/archives/add.js' ",
+    "arch-get": "mocha './test/unit_tests/archives/get.js' ",
+    "arch-delete": "mocha './test/unit_tests/archives/delete.js' --timeout 60000 ",
+
+    "record-test": "mocha './test/unit_tests/records/**.js' --timeout 60000 --reporter mochawesome --reporter-options reportDir=test_results/unit_tests,reportFilename=unit_tests",
+    "record-add-test": "mocha './test/unit_tests/records/add.js' ",
+    "record-del-test": "mocha './test/unit_tests/records/delete.js' ",
+    "record-get-test": "mocha './test/unit_tests/records/get.js' ",
+    "record-update-test": "mocha './test/unit_tests/records/update.js' ",
+
+
+    "folder-add-test": "mocha './test/unit_tests/folders/add.js' --timeout 60000 ",
+    "folder-get-test": "mocha './test/unit_tests/folders/get.js' --timeout 60000 ",
+    "folder-del-test": "mocha './test/unit_tests/folders/delete.js' --timeout 60000 ",
+    "folder-update-test": "mocha './test/unit_tests/folders/update.js' --timeout 60000 ",
+
+    "actions-move": "mocha './test/unit_tests/actions/move.js' --timeout 60000 ",
+    "actions-copy": "mocha './test/unit_tests/actions/copy.js' --timeout 60000 ",
+    "start": "cd publish/server && node app.js "
   },
   "repository": {
     "type": "git",
