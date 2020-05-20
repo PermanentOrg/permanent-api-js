@@ -1,8 +1,10 @@
 var
   util = require("util"),
   eventEmitter = require('events').EventEmitter,
+  http = require('http'),
   request = require('request'),
-  fs = require('fs')
+  fs = require('fs'),
+  querystring = require('querystring')
   ;
 
 
@@ -13,6 +15,9 @@ function permanent(apikey) {
   }
 
   var app_instance = this;
+  var _hostname = 'http://localhost:9002';
+  // var _hostname = 'https://devapi.permanent.org';
+
   var _API_KEY = apikey || process.env.PERMANENTORG_APIKEY;
   var apievents = {
     initfailed: 'permanent.initfailed',
@@ -23,183 +28,294 @@ function permanent(apikey) {
   this.Init = false;
 
   var routes = {
+    actions: {
+      move: '/move',
+      copy: '/copy'
+    },
     archive: {
+      add: '/archive/add',
+      delete: '/archive/delete',
       get: '/archive/get',
-      create: '/archive/create',
       update: '/archive/update'
     },
     record: {
+      add: '/record/add',
+      delete: '/record/delete',
       get: '/record/get',
-      add: '/record/add'
+      update: '/record/update',
+      getfile: '/record/getfile'
     },
     folder: {
+      add: '/folder/add',
+      delete: '/folder/delete',
       get: '/folder/get',
-      add: '/folder/add'
+      update: '/folder/update'
     }
   };
 
+  this.archive = {
+    get: getArchive,
+    add: addArchive,
+    delete:deleteArchive,
+    update:updateArchive
+  };
 
-  this.createArchive = createArchive;
-  this.getArchive = getArchive;
-  this.updateArchive = updateArchive;
-  this.deleteArchive = deleteArchive;
+  function getArchive(msg) {
+    return post(routes.archive.get, msg);
+  }
+  function addArchive(msg) {
+    return post(routes.archive.add, msg);
+  }
+  function deleteArchive(msg) {
+    return post(routes.archive.delete, msg);
+  }
+  function updateArchive(msg) {
+    return post(routes.archive.delete, msg);
+  }
+  
+  this.folder = {
+    get: getFolder,
+    add: addFolder,
+    delete:deleteFolder,
+    update:updateFolder
+  };
 
-  this.getRecord = getRecord;
-  this.addRecord = addRecord;
-
-  this.addFolder = addFolder;
-  this.getFolder = getFolder;
+  function getFolder(msg) {
+    return post(routes.folder.get, msg);
+  }
+  function addFolder(msg) {
+    return post(routes.folder.add, msg);
+  }
+  function deleteFolder(msg) {
+    return post(routes.folder.delete, msg);
+  }
+  function updateFolder(msg) {
+    return post(routes.folder.delete, msg);
+  }
 
 
   function init() {
     app_instance.Init = true;
-
   }
 
 
-  function getArchive(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.archive.get, req);
-  }
+  // function getRecord(data) {
+  //   var req = prepRequest(data, true);
+  //   return postMsg(routes.record.get, req);
+  // }
 
-  function createArchive(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.archive.create, req);
-  }
+  // function addRecord(data) {
+  //   var req = prepRequest(data, true);
+  //   return postMsg(routes.record.add, req);
+  // }
 
-  function updateArchive(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.archive.update, req);
-  }
+  // function addFolder(data) {
+  //   var req = prepRequest(data, true);
+  //   return postMsg(routes.folder.add, req);
+  // }
 
-  function deleteArchive(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.archive.delete, req);
-  }
+  // function getFolder(data) {
+  //   var req = prepRequest(data, true);
+  //   return postMsg(routes.folder.get, req);
+  // }
 
-  function getRecord(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.record.get, req);
-  }
+  function post(route, msg) {
 
-  function addRecord(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.record.add, req);
-  }
+    return new Promise(function (resolve, reject) {
 
-  function addFolder(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.folder.add, req);
-  }
+      if (!_API_KEY) {
+        reject('API_KEY is required');
+        return;
+      }
 
-  function getFolder(data) {
-    var req = prepRequest(data, true);
-    return postMsg(routes.folder.get, req);
-  }
+      if (!msg.apiKey) {
+        msg.apiKey = _API_KEY;
+      }
 
-  function postMsg(route, msg) {
-
-    if (!_API_KEY) {
-      throw 'API_KEY is required';
-    }
-    return new Promise(function (resolve) {
-      var clientResponse = new Response();
-      // var url = 'http://localhost:9002'+ route;
-      var url = 'https://devapi.permanent.org' + route;
-
-      var reqOptions = {
-        preambleCRLF: true,
-        postambleCRLF: true,
-        url: url
+      var url = _hostname + route;
+      var postData = querystring.stringify({ form: JSON.stringify(msg) });
+      var response = '';
+      var options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(postData)
+        }
       };
 
-      prepForm(reqOptions, msg);
-      request.post(reqOptions, serverResponse);
+      var req = http.request(url, options, function (res) {
 
-      function serverResponse(err, httpRes, apiResponse) {
-        if (err) {
-          clientResponse.success = false;
-          resolve(clientResponse);
-          return;
-        }
 
-        if (httpRes.statusCode === 200) {
-          var resObj = JSON.parse(apiResponse);
-          clientResponse.message = resObj.message;
-          clientResponse.success = resObj.success;
-          clientResponse.data = resObj.data;
-        }
-        else {
-          clientResponse.httpcode = httpRes.statusCode;
-          clientResponse.success = false;
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+          response += chunk;
+        });
 
-        }
-        resolve(clientResponse);
+        res.on('end', function (httpres) {
+          var responseData = {
+            data: JSON.parse(response),
+            statusCode: res.statusCode,
+            headers: res.headers
+          };
+          resolve(responseData);
+        });
+
+      });
+
+      req.on('error', function (e) {
+        resolve(e);
+      });
+      req.write(postData);
+      req.end();
+    });
+
+  }
+
+  function postMultiPart(route, msg) {
+    return new Promise(function (resolve, reject) {
+      if (!_API_KEY) {
+        reject('API_KEY is required');
+        return;
       }
+
+      if (!msg.apiKey) {
+        msg.apiKey = _API_KEY;
+      }
+
+      var url = _hostname + route;
+      var formData = {
+        form: JSON.stringify({ data: msg.data, apiKey: msg.apiKey })
+      };
+
+      formData[msg.file.name] = {
+        value: fs.createReadStream(msg.file.filepath),
+        options: {
+          filename: msg.file.name,
+          contentType: msg.file.contentType
+        }
+      };
+
+      var postops = {
+        preambleCRLF: true,
+        postambleCRLF: true,
+        url: url,
+        formData: formData
+      };
+
+      request.post(postops, function (err, httpResponse, body) {
+        if (err) {
+          var ddd = err;
+        }
+        resolve(JSON.parse(body));
+      })
+        .on('error', function (err) {
+          console.error(err);
+        });
+
     });
   }
 
-  function prepForm(reqOptions, msg) {
-    var formData;
-    var ismultipart = reqOptions.url.includes(routes.record.add);
+  // function postMsg(route, msg) {
 
-    if (ismultipart && msg.data && msg.data.length > 0) {
-      formData = { payload: msg };
-      var keys = Object.keys(formData.payload.data[0]);
-      var prop;
-      for (var di = 0; di < keys.length; di++) {
-        prop = keys[di];
-        if (formData.payload.data[0][prop] instanceof permanent.prototype.File) {
-          
-          var file = formData.payload.data[0][prop];
+  //   if (!_API_KEY) {
+  //     throw 'API_KEY is required';
+  //   }
+  //   return new Promise(function (resolve) {
+  //     var clientResponse = new Response();
+  //     var url = 'http://localhost:9002' + route;
+  //     // var url = 'https://devapi.permanent.org' + route;
 
-          formData[file.fileInfo.filename] = {
-            'value': fs.createReadStream(file.fileInfo.path),
-            'options': {
-              'filename': file.fileInfo.filename,
-              'contentType': file.fileInfo.mimetype
-            }
-          };
-          delete formData.payload.data[0][prop];
-        }
-      }
+  //     var reqOptions = {
+  //       preambleCRLF: true,
+  //       postambleCRLF: true,
+  //       url: url
+  //     };
 
-      formData.payload = JSON.stringify(formData.payload);
-      formData.apiKey = _API_KEY;
-      formData.isjson = '1';
-      reqOptions.formData = formData;
-    }
-    else {
-      reqOptions.form = {
-        'payload': msg,
-        'apiKey': _API_KEY
-      };
-    }
+  //     prepForm(reqOptions, msg);
+  //     request.post(reqOptions, serverResponse);
 
-  }
+  //     function serverResponse(err, httpRes, apiResponse) {
+  //       if (err) {
+  //         clientResponse.success = false;
+  //         resolve(clientResponse);
+  //         return;
+  //       }
+
+  //       if (httpRes.statusCode === 200) {
+  //         var resObj = JSON.parse(apiResponse);
+  //         clientResponse.message = resObj.message;
+  //         clientResponse.success = resObj.success;
+  //         clientResponse.data = resObj.data;
+  //       }
+  //       else {
+  //         clientResponse.httpcode = httpRes.statusCode;
+  //         clientResponse.success = false;
+
+  //       }
+  //       resolve(clientResponse);
+  //     }
+  //   });
+  // }
+
+  // function prepForm(reqOptions, msg) {
+  //   var formData;
+  //   var ismultipart = reqOptions.url.includes(routes.record.add);
+
+  //   if (ismultipart && msg.data && msg.data.length > 0) {
+  //     formData = { data: msg };
+  //     var keys = Object.keys(formData.data.data[0]);
+  //     var prop;
+  //     for (var di = 0; di < keys.length; di++) {
+  //       prop = keys[di];
+  //       if (formData.data.data[0][prop] instanceof permanent.prototype.File) {
+
+  //         var file = formData.data.data[0][prop];
+
+  //         formData[file.fileInfo.filename] = {
+  //           'value': fs.createReadStream(file.fileInfo.path),
+  //           'options': {
+  //             'filename': file.fileInfo.filename,
+  //             'contentType': file.fileInfo.mimetype
+  //           }
+  //         };
+  //         delete formData.data.data[0][prop];
+  //       }
+  //     }
+
+  //     formData.data = JSON.stringify(formData.data);
+  //     formData.apiKey = _API_KEY;
+  //     // formData.isjson = '1';
+  //     reqOptions.formData = formData;
+  //   }
+  //   else {
+  //     reqOptions.form = JSON.stringify({
+  //       'form':{
+  //       'data': msg,
+  //       'apiKey': _API_KEY
+  //       }
+  //     });
+  //   }
+
+  // }
 
 
-  function prepRequest(data) {
-    if (!data) {
-      return data;
-    }
-    var req = new Request();
-    req.data.push(data);
-    return req;
-  }
+  // function prepRequest(data) {
+  //   if (!data) {
+  //     return data;
+  //   }
+  //   var req = new Request();
+  //   req.data.push(data);
+  //   return req;
+  // }
 
-
-
-
-
-  function Request(data) {
-    if (data && !Array.isArray(data)) {
-      this.data = [data];
-    }
-    else {
-      this.data = [];
-    }
-  }
+  // function Request(data) {
+  //   if (data && !Array.isArray(data)) {
+  //     this.data = [data];
+  //   }
+  //   else {
+  //     this.data = [];
+  //   }
+  // }
 
   function Response(response) {
     this.success = '';
@@ -218,9 +334,9 @@ function permanent(apikey) {
 }
 
 
-permanent.prototype.File = function (info) {
-  this.fileInfo = info;
-};
+// permanent.prototype.File = function (info) {
+//   this.fileInfo = info;
+// };
 
 util.inherits(permanent, eventEmitter);
 
