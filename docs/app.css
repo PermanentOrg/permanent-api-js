@@ -344,7 +344,7 @@ body {
   width: 80%;
 }
 .main .right .page {
-  scroll-behavior: smooth;
+  
   overflow-y: scroll;
   height: 83vh;
 }
