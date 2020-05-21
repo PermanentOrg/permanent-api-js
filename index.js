@@ -55,8 +55,8 @@ function permanent(apikey) {
   this.archive = {
     get: getArchive,
     add: addArchive,
-    delete:deleteArchive,
-    update:updateArchive
+    delete: deleteArchive,
+    update: updateArchive
   };
 
   function getArchive(msg) {
@@ -71,12 +71,12 @@ function permanent(apikey) {
   function updateArchive(msg) {
     return post(routes.archive.delete, msg);
   }
-  
+
   this.folder = {
     get: getFolder,
     add: addFolder,
-    delete:deleteFolder,
-    update:updateFolder
+    delete: deleteFolder,
+    update: updateFolder
   };
 
   function getFolder(msg) {
@@ -92,12 +92,12 @@ function permanent(apikey) {
     return post(routes.folder.delete, msg);
   }
 
-  
+
   this.record = {
     get: getRecord,
     add: addRecord,
-    delete:deleteRecord,
-    update:updateRecord
+    delete: deleteRecord,
+    update: updateRecord
   };
 
   function getRecord(msg) {
@@ -112,35 +112,20 @@ function permanent(apikey) {
   function updateRecord(msg) {
     return post(routes.record.update, msg);
   }
-  
 
-  
+  this.copy = function (msg) {
+    return post(routes.actions.copy, msg);
+  };
+
+  this.move =function (msg) {
+    return post(routes.actions.move, msg);
+  };
 
 
   function init() {
     app_instance.Init = true;
   }
 
-
-  // function getRecord(data) {
-  //   var req = prepRequest(data, true);
-  //   return postMsg(routes.record.get, req);
-  // }
-
-  // function addRecord(data) {
-  //   var req = prepRequest(data, true);
-  //   return postMsg(routes.record.add, req);
-  // }
-
-  // function addFolder(data) {
-  //   var req = prepRequest(data, true);
-  //   return postMsg(routes.folder.add, req);
-  // }
-
-  // function getFolder(data) {
-  //   var req = prepRequest(data, true);
-  //   return postMsg(routes.folder.get, req);
-  // }
 
   function post(route, msg) {
 
@@ -175,12 +160,13 @@ function permanent(apikey) {
         });
 
         res.on('end', function (httpres) {
-          var responseData = {
-            data: JSON.parse(response),
-            statusCode: res.statusCode,
-            headers: res.headers
-          };
-          resolve(responseData);
+          // var responseData = {
+          //   data: JSON.parse(response),
+          //   statusCode: res.statusCode,
+          //   headers: res.headers
+          // };
+          // resolve(responseData);
+          resolve(JSON.parse(response));
         });
 
       });
@@ -238,128 +224,10 @@ function permanent(apikey) {
     });
   }
 
-  // function postMsg(route, msg) {
-
-  //   if (!_API_KEY) {
-  //     throw 'API_KEY is required';
-  //   }
-  //   return new Promise(function (resolve) {
-  //     var clientResponse = new Response();
-  //     var url = 'http://localhost:9002' + route;
-  //     // var url = 'https://devapi.permanent.org' + route;
-
-  //     var reqOptions = {
-  //       preambleCRLF: true,
-  //       postambleCRLF: true,
-  //       url: url
-  //     };
-
-  //     prepForm(reqOptions, msg);
-  //     request.post(reqOptions, serverResponse);
-
-  //     function serverResponse(err, httpRes, apiResponse) {
-  //       if (err) {
-  //         clientResponse.success = false;
-  //         resolve(clientResponse);
-  //         return;
-  //       }
-
-  //       if (httpRes.statusCode === 200) {
-  //         var resObj = JSON.parse(apiResponse);
-  //         clientResponse.message = resObj.message;
-  //         clientResponse.success = resObj.success;
-  //         clientResponse.data = resObj.data;
-  //       }
-  //       else {
-  //         clientResponse.httpcode = httpRes.statusCode;
-  //         clientResponse.success = false;
-
-  //       }
-  //       resolve(clientResponse);
-  //     }
-  //   });
-  // }
-
-  // function prepForm(reqOptions, msg) {
-  //   var formData;
-  //   var ismultipart = reqOptions.url.includes(routes.record.add);
-
-  //   if (ismultipart && msg.data && msg.data.length > 0) {
-  //     formData = { data: msg };
-  //     var keys = Object.keys(formData.data.data[0]);
-  //     var prop;
-  //     for (var di = 0; di < keys.length; di++) {
-  //       prop = keys[di];
-  //       if (formData.data.data[0][prop] instanceof permanent.prototype.File) {
-
-  //         var file = formData.data.data[0][prop];
-
-  //         formData[file.fileInfo.filename] = {
-  //           'value': fs.createReadStream(file.fileInfo.path),
-  //           'options': {
-  //             'filename': file.fileInfo.filename,
-  //             'contentType': file.fileInfo.mimetype
-  //           }
-  //         };
-  //         delete formData.data.data[0][prop];
-  //       }
-  //     }
-
-  //     formData.data = JSON.stringify(formData.data);
-  //     formData.apiKey = _API_KEY;
-  //     // formData.isjson = '1';
-  //     reqOptions.formData = formData;
-  //   }
-  //   else {
-  //     reqOptions.form = JSON.stringify({
-  //       'form':{
-  //       'data': msg,
-  //       'apiKey': _API_KEY
-  //       }
-  //     });
-  //   }
-
-  // }
-
-
-  // function prepRequest(data) {
-  //   if (!data) {
-  //     return data;
-  //   }
-  //   var req = new Request();
-  //   req.data.push(data);
-  //   return req;
-  // }
-
-  // function Request(data) {
-  //   if (data && !Array.isArray(data)) {
-  //     this.data = [data];
-  //   }
-  //   else {
-  //     this.data = [];
-  //   }
-  // }
-
-  function Response(response) {
-    this.success = '';
-    this.error = '';
-    this.message = '';
-    this.data = '';
-
-    if (response) {
-      this.success = response.success;
-      this.error = response.error;
-    }
-  }
-
   init();
 
 }
 
-
-// permanent.prototype.File = function (info) {
-//   this.fileInfo = info;
-// };
 
 util.inherits(permanent, eventEmitter);
 
