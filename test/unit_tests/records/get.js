@@ -58,10 +58,26 @@ describe('/record/get', function () {
           var res = response.data;
           assert.isTrue(response.statusCode == 200);
           assert.isTrue(res.success);
-          assert.isObject(res.data.record);
           assert.isEmpty(res.error);
           assert.isEmpty(res.message);
           assert.isTrue(res.httpcode == '200');
+
+          assert.isObject(res.data.record);
+          assert.isObject(res.data.record.thumbnails);
+          assert.isNotEmpty(res.data.record.thumbnails.thumbURL200);
+          assert.isNotEmpty(res.data.record.thumbnails.thumbURL500);
+          assert.isNotEmpty(res.data.record.thumbnails.thumbURL1000);
+          assert.isNotEmpty(res.data.record.thumbnails.thumbURL2000);
+
+          assert.isNotEmpty(res.data.record.status);
+          assert.isNotEmpty(res.data.record.type);
+          assert.isNumber(res.data.record.size);
+          assert.isNotEmpty(res.data.record.contentType);
+          assert.isNumber(res.data.record.height);
+          assert.isNumber(res.data.record.width);
+          assert.isNotEmpty(res.data.record.downloadURL);
+          
+
           done();
         });
 
