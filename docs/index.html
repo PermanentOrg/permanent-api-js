@@ -13,17 +13,29 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="https://kit.fontawesome.com/1b5c1b2d26.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+
+    <!-- <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css"> -->
 
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    
+
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="/app.css">
 
 
   </head>
@@ -41,18 +53,20 @@
           <li><a href="#archives">Archives</a></li>
           <li><a href="#records">Records</a></li>
           <li><a href="#folders">Folders</a></li>
+          <li><a href="#actions">Actions</a></li>
           <li><a href="#terms">Terms</a></li>
+          <li><a href="#errcodes">System Codes</a></li>
         </ul>
       </div>
       <div class="right p-lg bl">
         <div class="page ">
 
           <h2>Documentation Status: Early Preview</h2>
-            <article>
-              <p>
-                This documentation is currently under development and is being released for early preview. 
-              </p>
-            </article>
+          <article>
+            <p>
+              This documentation is currently under development and is being released for early preview.
+            </p>
+          </article>
 
           <section id="intro">
             <h2>Introduction</h2>
@@ -201,7 +215,7 @@
                         --boundary 
                         Content-Disposition: form-data; name="form" 
                         
-                        "{"apiKey":"your-apikey","data":{"archiveNumber":"0000-0000","record_name":"my-file"},
+                        "{"apiKey":"your-apikey","data":{"paNumber":"0000-0000","record_name":"my-file"},
                         "file":{"name":"permanent-logo.png","contentType":"the-mime-type"}}" 
 
                         --boundary 
@@ -317,7 +331,7 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>data.archiveNumber</td>
+                        <td>data.paNumber</td>
                         <td>string</td>
                         <td>The unique archive number.</td>
                       </tr>
@@ -369,7 +383,7 @@
                       assert.isEmpty(response.error);
                       assert.isEmpty(response.message);
                       assert.isTrue(response.httpcode == 200);
-                      assert.isString(response.data.archiveNumber, 'new archive number is: ' + response.data.archiveNumber);
+                      assert.isString(response.data.paNumber, 'new archive number is: ' + response.data.paNumber);
                       done();
                     });
 
@@ -396,7 +410,7 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td>paNumber</td>
                         <td>string</td>
                         <td>Required. The archive number for the archive.</td>
                       </tr>
@@ -413,20 +427,25 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>data.archiveNumber</td>
+                        <td>data.paNumber</td>
                         <td>string</td>
                         <td>The unique archive number.</td>
                       </tr>
                       <tr>
-                        <td>data.fullname</td>
-                        <td>string</td>
-                        <td>The name of the archive.</td>
+                        <td>data.profile</td>
+                        <td>object</td>
+                        <td>The archive profile data.</td>
                       </tr>
                       <tr>
                         <td>data.thumbnails</td>
-                        <td>object</td>
+                        <td>array</td>
                         <td>A list of urls for thumbnail images of various sizes.</td>
                       </tr>
+                      <tr>
+                          <td>data.folders</td>
+                          <td>array</td>
+                          <td>A list of the archives root folders.</td>
+                        </tr>
                       <tr>
                         <td>success</td>
                         <td>boolean</td>
@@ -465,7 +484,7 @@
                       var req = {
                         apiKey: 'apikey',
                         data: {
-                          archiveNumber: '0000-0000'
+                          paNumber: '0000-0000'
                         }
                       };
                   
@@ -475,12 +494,17 @@
                         assert.isEmpty(response.message);
                         assert.isTrue(response.httpcode == 200);
                         assert.isObject(response.data.archive);
-                        assert.isNotEmpty(response.data.archive.archiveNumber);
+                        assert.isNotEmpty(response.data.archive.paNumber);
                         assert.isNotEmpty(response.data.archive.fullname);
                         assert.isNotEmpty(response.data.archive.thumbnails.thumbURL1000);
                         assert.isNotEmpty(response.data.archive.thumbnails.thumbURL2000);
                         assert.isNotEmpty(response.data.archive.thumbnails.thumbURL200);
                         assert.isNotEmpty(response.data.archive.thumbnails.thumbURL500);
+
+                        assert.isNotEmpty(res.data.archive.folders);
+
+                        assert.isNotEmpty(res.data.archive.profile);
+                        assert.isNotEmpty(res.data.archive.profile.fullname);
                       
                       });
   
@@ -505,7 +529,7 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td>paNumber</td>
                         <td>string</td>
                         <td>Required. The archive number for the archive.</td>
                       </tr>
@@ -559,7 +583,7 @@
                       var req = {
                         apiKey: 'apikey',
                         data: {
-                          archiveNumber: res.data.archiveNumber
+                          paNumber: res.data.paNumber
                         }
                       };
                   
@@ -592,7 +616,7 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td>paNumber</td>
                         <td>string</td>
                         <td>Required. The archive number for the archive.</td>
                       </tr>
@@ -653,7 +677,7 @@
                       
                           send_HTTP_Post('/archive/add', req).then(function (res) {
                             assert.isTrue(res.success);
-                            assert.isString(res.data.archiveNumber, 'new archive number is: ' + res.data.archiveNumber);
+                            assert.isString(res.data.paNumber, 'new archive number is: ' + res.data.paNumber);
                             done();
                           });
       
@@ -729,164 +753,164 @@
                         <td class="fw500">archive</td>
                         <td>object</td>
                         <td>
-                          <!-- <div class="mb">
-                            <span class="fw500">paNumber</span>
-                            <span class="typreq">Type: string; Is Required</span>
-                          </div>
-                          <div>The archive's PA Number</div> -->
                         </td>
                       </tr>
                       <tr>
-                          <td class="fw500 pl-lg">- paNumber</td>
-                          <td>string</td>
+                        <td class="fw500 pl-lg">- paNumber</td>
+                        <td>string</td>
                         <td>
-                          <div>Required</div>
-                            <div>The archive's PA Number</div>
+                          <span class="typreq">Required</span>
+                          <span>The archive's PA Number</span>
                         </td>
                       </tr>
                       <tr>
                         <td class="fw500">record</td>
                         <td>object</td>
                         <td>
-                          <!-- <div class="bb mb">
-                            <div class="mb">
-                              <span class="fw500">name</span>
-                              <span class="typreq">Type: string; Not Required</span>
-                            </div>
-                            <div>A user entered name of the file.</div>
-                          </div>
-                          <div class="bb mb">
-                            <div class="mb">
-                              <span class="fw500">description</span>
-                              <span class="typreq">Type: string; Not Required</span>
-                            </div>
-                            <div>A user entered description of the file.</div>
-                          </div>
-                          <div class="mb">
-                            <div class="mb">
-                              <span class="fw500">location</span>
-                              <span class="typreq">Type: object; Not Required</span>
-                            </div>
-                            <div>Geolocation data for the file.</div>
-                            <div class="pl">
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">name</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div>Name of location e.g. Home or Office.</div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">streetNumber</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">streetName</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">postalCode</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">locality</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">adminOneName</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">adminOneCode</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">adminTwoName</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">adminTwoCode</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">country</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">countryCode</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="bb mb p">
-                                <div class="mb">
-                                  <span class="fw500">latitude</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                              <div class="mb p">
-                                <div class="mb">
-                                  <span class="fw500">longitude</span>
-                                  <span class="typreq">Type: string; Not Required</span>
-                                </div>
-                                <div></div>
-                              </div>
-                            </div>
-                          </div> -->
-
                         </td>
                       </tr>
                       <tr>
                         <td class="fw500 pl-lg">- name</td>
                         <td>string</td>
                         <td>
-                              <div>Not Required</div>
-                              <div>A user entered name of the file.</div>
+                          <span class="typreq">Not Required</span>
+                          <span>A user entered name of the file.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- description</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>A user entered description of the file.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- location</td>
+                        <td>object</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>Geolocation data for the file.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- name</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>Name of location e.g. Home or Office.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- streetNumber</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- streetName</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- postalCode</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- locality</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- adminOneName</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- adminOneCode</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- adminTwoName</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- adminTwoCode</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- country</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- countryCode</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- latitude</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-xl">-- longitude</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span></span>
                         </td>
                       </tr>
                       <tr>
                         <td class="fw500">file</td>
                         <td>object</td>
                         <td>
-                          <div class="bb mb">
-                            <div class="mb">
-                              <span class="fw500">name</span>
-                              <span class="typreq">Type: string; Not Required</span>
-                            </div>
-                            <div>The upload file name with extension.</div>
-                          </div>
                         </td>
                       </tr>
-
+                      <tr>
+                        <td class="fw500 pl-xl">- name</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>The upload file name with extension.</span>
+                        </td>
+                      </tr>
                     </table>
                     <p class="b p-lg text-italic">
                       The contents of the file must be sent along with the post as multipart/form-data.
@@ -904,35 +928,32 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>data.archiveNumber</td>
+                        <td class="fw500">data.paNumber</td>
                         <td>string</td>
-                        <td>The unique archive number.</td>
+                        <td>The unique pa number for the record.</td>
                       </tr>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
-
                     </table>
                   </p>
-
-
                 </div>
                 <br><br>
                 <div class="mt-xl">
@@ -987,7 +1008,7 @@
                           assert.isEmpty(res.message);
                           assert.isObject(res.data);
                           assert.isObject(res.data.record);
-                          assert.isNotEmpty(res.data.record.archiveNumber);
+                          assert.isNotEmpty(res.data.record.paNumber);
                           assert.isString(res.data.record.paNumber, 'new archive number is: ' + res.data.record.paNumber);
                         
                         });
@@ -1006,6 +1027,7 @@
                 <div class="mt-xl">
                   <p>
                     <div class="text-bold">Request</div>
+
                     <table class="table">
                       <thead>
                         <tr>
@@ -1015,9 +1037,12 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td class="fw500 pl-lg">paNumber</td>
                         <td>string</td>
-                        <td>Required. The archive number for the archive.</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The record's PA Number</span>
+                        </td>
                       </tr>
                     </table>
                   </p>
@@ -1032,41 +1057,112 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>data.paNumber</td>
-                        <td>string</td>
-                        <td>The unique archive number.</td>
+                        <td class="fw500">data.record</td>
+                        <td>object</td>
+                        <td>The record.</td>
                       </tr>
                       <tr>
-                        <td>data.fullname</td>
-                        <td>string</td>
-                        <td>The name of the archive.</td>
+                        <td class="fw500">- recordId</td>
+                        <td></td>
+                        <td></td>
                       </tr>
                       <tr>
-                        <td>data.thumbnails</td>
+                        <td class="fw500">- paNumber</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- name</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- description</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- thumbnails</td>
                         <td>object</td>
                         <td>A list of urls for thumbnail images of various sizes.</td>
                       </tr>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500">- updatedDT</td>
+                        <td>datetime string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- displayDT</td>
+                        <td>datetime string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- displayEndDT</td>
+                        <td>datetime string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- createdDT</td>
+                        <td>datetime string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- status</td>
+                        <td>string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- type</td>
+                        <td>string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- size</td>
+                        <td>int</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- contentType</td>
+                        <td>string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- height</td>
+                        <td>string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- width</td>
+                        <td>string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">- downloadURL</td>
+                        <td>string</td>
+                        <td>returns a signed URL for downloading the file</td>
+                      </tr>
+                      
+
+                      <tr>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
-
                     </table>
                   </p>
 
@@ -1084,22 +1180,33 @@
                           var req = {
                             apiKey: 'apikey',
                             data: {
-                              archiveNumber: '0000-0000'
+                              paNumber: '0001-000y'
                             }
                           };
                       
-                          send_HTTP_Post('/archive/get', req).then(function (response) {
-                            assert.isTrue(response.success);
-                            assert.isEmpty(response.error);
-                            assert.isEmpty(response.message);
-                            assert.isTrue(response.httpcode == 200);
-                            assert.isObject(response.data.archive);
-                            assert.isNotEmpty(response.data.archive.paNumber);
-                            assert.isNotEmpty(response.data.archive.fullname);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL1000);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL2000);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL200);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL500);
+                          send_HTTP_Post('/record/get', req).then(function (response) {
+                            var res = response.data;
+                            assert.isTrue(response.statusCode == 200);
+                            assert.isTrue(res.success);
+                            assert.isEmpty(res.error);
+                            assert.isEmpty(res.message);
+                            assert.isTrue(res.httpcode == '200');
+                  
+                            assert.isObject(res.data.record);
+                            assert.isObject(res.data.record.thumbnails);
+                            assert.isNotEmpty(res.data.record.thumbnails.thumbURL200);
+                            assert.isNotEmpty(res.data.record.thumbnails.thumbURL500);
+                            assert.isNotEmpty(res.data.record.thumbnails.thumbURL1000);
+                            assert.isNotEmpty(res.data.record.thumbnails.thumbURL2000);
+                  
+                            assert.isNotEmpty(res.data.record.status);
+                            assert.isNotEmpty(res.data.record.type);
+                            assert.isNumber(res.data.record.size);
+                            assert.isNotEmpty(res.data.record.contentType);
+                            assert.isNumber(res.data.record.height);
+                            assert.isNumber(res.data.record.width);
+                            assert.isNotEmpty(res.data.record.downloadURL);
+
                           
                           });
       
@@ -1127,9 +1234,12 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td class="fw500">paNumber</td>
                         <td>string</td>
-                        <td>Required. The archive number for the archive.</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The record's PA Number</span>
+                        </td>
                       </tr>
                     </table>
                   </p>
@@ -1144,22 +1254,22 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
@@ -1181,11 +1291,11 @@
                           var req = {
                             apiKey: 'apikey',
                             data: {
-                              archiveNumber: res.data.paNumber
+                              paNumber: 'aaaa-aaaa'
                             }
                           };
                       
-                          send_HTTP_Post('/archive/delete', req).then(function (response) {
+                          send_HTTP_Post('/record/delete', req).then(function (response) {
                             assert.isTrue(response.success);
                             assert.isEmpty(response.error);
                             assert.isEmpty(response.message);
@@ -1217,9 +1327,28 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td class="fw500">paNumber</td>
                         <td>string</td>
-                        <td>Required. The archive number for the archive.</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The record's PA Number</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">name</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>The record's name.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">description</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>The record's description.</span>
+                        </td>
                       </tr>
                     </table>
                   </p>
@@ -1234,22 +1363,22 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
@@ -1269,17 +1398,21 @@
                     <pre>
                           <code id="recup"> 
                               var req = {
-                                apiKey: config.apikey,
+                                apiKey: config.apikey, 
                                 data: {
-                                  fullname: "My archive name",
-                                  type: 'person'
+                                  paNumber: '0001-000x',
+                                  name: 'update name '',
+                                  description:'updated description'
                                 }
                               };
+                              
                           
-                              send_HTTP_Post('/archive/add', req).then(function (res) {
-                                assert.isTrue(res.success);
-                                assert.isString(res.data.archiveNumber, 'new archive number is: ' + res.data.archiveNumber);
-                                done();
+                              reqHlp.testPostForm('/record/update', req).then(function (response) {
+                                var res = response.data;
+                                assert.isTrue(response.statusCode == 200);
+                                assert.isEmpty(res.error);
+                                assert.isEmpty(res.message);
+                                assert.isObject(res.data);
                               });
           
                           </code>
@@ -1290,6 +1423,8 @@
 
             </article>
           </section>
+
+          <br><br>
 
           <section id="folders">
             <h2>Folders</h2>
@@ -1350,15 +1485,42 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>fullname</td>
-                        <td>string</td>
-                        <td>Required. The name of the archive.</td>
+                        <td class="fw500">archive</td>
+                        <td>object</td>
+                        <td>
+                        </td>
                       </tr>
                       <tr>
-                        <td>type</td>
+                        <td class="fw500 pl-lg">- paNumber</td>
                         <td>string</td>
-                        <td>Required. Acceptible values are person,family, and organization.</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The archive's PA Number</span>
+                        </td>
                       </tr>
+                      <tr>
+                        <td class="fw500">folder</td>
+                        <td>object</td>
+                        <td>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- name</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>The name of the folder.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- parentFolder_paNumber</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Not Required</span>
+                          <span>The paNumber of the parent folder if placing this folder into another folder.</span>
+                        </td>
+                      </tr>
+
 
                     </table>
                   </p>
@@ -1373,27 +1535,27 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>data.archiveNumber</td>
+                        <td class="fw500">folder.paNumber</td>
                         <td>string</td>
-                        <td>The unique archive number.</td>
+                        <td>The unique pa number for the folder.</td>
                       </tr>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
@@ -1412,22 +1574,28 @@
                     </div>
                     <pre>
                     <code id="folderadd"> 
-                        var req = {
-                          apiKey: config.apikey,
-                          data: {
-                            fullname: "My archive name",
-                            type: 'person'
+                      var req = {
+                        apiKey: 'apikey',
+                        data: {
+                          archive: {
+                            paNumber: '0000-0000',
+                          },
+                          folder: {
+                            name: 'A new folder',
+                            parentFolder_paNumber:''
                           }
-                        };
-                    
-                        send_HTTP_Post('/archive/add', req).then(function (response) {
-                          assert.isTrue(response.success);
-                          assert.isEmpty(response.error);
-                          assert.isEmpty(response.message);
-                          assert.isTrue(response.httpcode == 200);
-                          assert.isString(response.data.archiveNumber, 'new archive number is: ' + response.data.archiveNumber);
-                          done();
-                        });
+                        }
+                      };
+                  
+                      send_HTTP_Post('/folder/add', req).then(function (response) {
+                        var res = response.data;
+                        assert.isTrue(response.statusCode == 200);
+                        assert.isTrue(res.success);
+                        assert.isString(res.data.folder.paNumber, 'folder panumber is: ' + res.data.folder.paNumber);
+                        assert.isEmpty(res.error);
+                        assert.isEmpty(res.message);
+                        assert.isTrue(res.httpcode == '200');
+                      });
     
                     </code>
                   </pre>
@@ -1452,9 +1620,18 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td class="fw500">folder</td>
+                        <td>object</td>
+                        <td>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- paNumber</td>
                         <td>string</td>
-                        <td>Required. The archive number for the archive.</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The paNumber of the folder.</span>
+                        </td>
                       </tr>
                     </table>
                   </p>
@@ -1469,37 +1646,109 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>data.archiveNumber</td>
-                        <td>string</td>
-                        <td>The unique archive number.</td>
-                      </tr>
-                      <tr>
-                        <td>data.fullname</td>
-                        <td>string</td>
-                        <td>The name of the archive.</td>
-                      </tr>
-                      <tr>
-                        <td>data.thumbnails</td>
+                        <td class="fw500">folder</td>
                         <td>object</td>
-                        <td>A list of urls for thumbnail images of various sizes.</td>
+                        <td>The folder.</td>
                       </tr>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500 pl-lg">- paNumber</td>
+                        <td>string</td>
+                        <td>The folder paNumber.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- name</td>
+                        <td>string</td>
+                        <td>The folder name.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- description</td>
+                        <td>string</td>
+                        <td>The folder description.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- updatedDT</td>
+                        <td>string</td>
+                        <td>Last updated datetime.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- createdDT</td>
+                        <td>string</td>
+                        <td>Created datetime.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">thumbnails</td>
+                        <td>object</td>
+                        <td>List of URLs for folder thumbnail images.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">records</td>
+                        <td>object</td>
+                        <td>List of records in the folder.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- paNumber</td>
+                        <td>string</td>
+                        <td>The record paNumber.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- name</td>
+                        <td>string</td>
+                        <td>Name of record.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- description</td>
+                        <td>string</td>
+                        <td>Description of record.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- thumbnails</td>
+                        <td>object</td>
+                        <td>List of URLs for record thumbnail images.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- updatedDT</td>
+                        <td>datetime string</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- displayDT</td>
+                        <td>datetime string </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- createdDT</td>
+                        <td>datetime string </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- status</td>
+                        <td>string </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- type</td>
+                        <td>string </td>
+                        <td></td>
+                      </tr>
+
+
+                      <tr>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
@@ -1517,31 +1766,24 @@
                         class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
                     </div>
                     <pre>
-                      <code id="folderget"> 
-                          var req = {
-                            apiKey: 'apikey',
-                            data: {
-                              archiveNumber: '0000-0000'
-                            }
-                          };
-                      
-                          send_HTTP_Post('/archive/get', req).then(function (response) {
-                            assert.isTrue(response.success);
-                            assert.isEmpty(response.error);
-                            assert.isEmpty(response.message);
-                            assert.isTrue(response.httpcode == 200);
-                            assert.isObject(response.data.archive);
-                            assert.isNotEmpty(response.data.archive.archiveNumber);
-                            assert.isNotEmpty(response.data.archive.fullname);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL1000);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL2000);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL200);
-                            assert.isNotEmpty(response.data.archive.thumbnails.thumbURL500);
-                          
-                          });
-      
-                      </code>
-                    </pre>
+                    <code id="folderget"> 
+                      var req = {
+                        apiKey: 'apikey',
+                        data: {
+                          folder: {
+                            paNumber: '0000-0000',
+                          }
+                        }
+                      };
+                  
+                      send_HTTP_Post('/folder/get', req).then(function (response2) {
+                        var res2 = response2.data;
+                        assert.isTrue(response2.statusCode == 200);
+                        assert.isTrue(res2.success);
+                      });
+    
+                    </code>
+                  </pre>
                   </div>
                 </div>
               </article>
@@ -1564,9 +1806,9 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td class="fw500">paNumber</td>
                         <td>string</td>
-                        <td>Required. The archive number for the archive.</td>
+                        <td>Required. The folder paNumber.</td>
                       </tr>
                     </table>
                   </p>
@@ -1581,22 +1823,22 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
@@ -1615,14 +1857,16 @@
                     </div>
                     <pre>
                       <code id="folderdel"> 
-                          var req = {
-                            apiKey: 'apikey',
-                            data: {
-                              archiveNumber: res.data.archiveNumber
+                        var req = {
+                          apiKey: 'apikey',
+                          data: {
+                            folder: {
+                              paNumber: '0000-0000',
                             }
-                          };
+                          }
+                        };
                       
-                          send_HTTP_Post('/archive/delete', req).then(function (response) {
+                          send_HTTP_Post('/folder/delete', req).then(function (response) {
                             assert.isTrue(response.success);
                             assert.isEmpty(response.error);
                             assert.isEmpty(response.message);
@@ -1654,9 +1898,19 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>archiveNumber</td>
+                        <td class="fw500">paNumber</td>
                         <td>string</td>
-                        <td>Required. The archive number for the archive.</td>
+                        <td>Required. The paNumber for the folder.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">name</td>
+                        <td>string</td>
+                        <td>The name of the folder.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">description</td>
+                        <td>string</td>
+                        <td>The folder description.</td>
                       </tr>
                     </table>
                   </p>
@@ -1671,22 +1925,22 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td>success</td>
+                        <td class="fw500">success</td>
                         <td>boolean</td>
                         <td>true or false</td>
                       </tr>
                       <tr>
-                        <td>error</td>
+                        <td class="fw500">error</td>
                         <td>string</td>
                         <td>An error code.</td>
                       </tr>
                       <tr>
-                        <td>message</td>
+                        <td class="fw500">message</td>
                         <td>string</td>
                         <td>Any helpful messages regarding the request.</td>
                       </tr>
                       <tr>
-                        <td>httpcode</td>
+                        <td class="fw500">httpcode</td>
                         <td>string</td>
                         <td>The HTTP response code.</td>
                       </tr>
@@ -1705,17 +1959,20 @@
                     </div>
                     <pre>
                           <code id="folderup"> 
-                              var req = {
-                                apiKey: config.apikey,
-                                data: {
-                                  fullname: "My archive name",
-                                  type: 'person'
+                            var req = {
+                              apiKey: config.apikey,
+                              data: {
+                                folder: {
+                                  paNumber: '0000-0000',
+                                  name: 'folder name',
+                                  description: 'the folder description'
                                 }
-                              };
-                          
-                              send_HTTP_Post('/archive/add', req).then(function (res) {
+                              }
+                            };
+                        
+                              send_HTTP_Post('/folder/update', req).then(function (res) {
                                 assert.isTrue(res.success);
-                                assert.isString(res.data.archiveNumber, 'new archive number is: ' + res.data.archiveNumber);
+                                assert.isTrue(response.statusCode == 200);
                                 done();
                               });
           
@@ -1727,6 +1984,358 @@
 
             </article>
           </section>
+
+          <br><br>
+
+          <section id="actions">
+            <h2>Actions</h2>
+            <article>
+              <p class="mv">
+                This section describes actions that can be applied to Records, Folders and Archives.
+              </p>
+              <br>
+              <br>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="text-bold">Methods</td>
+                    <td class="text-bold">Route</td>
+                    <td class="text-bold">Description</td>
+                  </tr>
+                </thead>
+                <tr>
+                  <td>move</td>
+                  <td>/move</td>
+                  <td>Move an asset using paNumbers. An example is move a record or folder to another folder. </td>
+                </tr>
+                <tr>
+                  <td>copy</td>
+                  <td>/copy</td>
+                  <td>Copy an asset using paNumbers. An example is copy a record or folder to another folder. </td>
+                </tr>
+              </table>
+            </article>
+            <article>
+              <br>
+              <br>
+              <article class="csecbck p">
+                <h5>move - /move</h5>
+                <p>
+                  Move an asset using paNumbers. An example is move a record or folder to another folder.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td class="fw500">data</td>
+                        <td>array</td>
+                        <td>An array of key/value objects.
+                          <div>
+                            [
+                            {
+                            source: '',
+                            destination: ''
+                            }
+                            ]
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- source</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The paNumber of the asset to be moved. E.g. a folder or record paNumber.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- destination</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The paNumber of the folder destination for the move.</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td class="fw500">result</td>
+                        <td>array</td>
+                        <td>
+                          <div>An array of the data sent for the move along with results per element.</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- source</td>
+                        <td>string</td>
+                        <td>
+                          <span>The paNumber of source.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- destination</td>
+                        <td>string</td>
+                        <td>
+                          <span>The paNumber of the destination.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- success</td>
+                        <td>boolean</td>
+                        <td>If the move succeeded or not.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- error</td>
+                        <td>string</td>
+                        <td>Reason for failure.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">success</td>
+                        <td>boolean</td>
+                        <td>Indicates if the API call succeeded.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class=" bt">
+                    <div class="mv">
+                      <button type="button" data-code="movecode"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                    <code id="movecode"> 
+                      var req = {
+                        apiKey: 'apikey',
+                        data:
+                          [
+                            {
+                              source: '0000-0000',
+                              destination: '0000-0000'
+                            },
+                            {
+                              source: '0000-0000',
+                              destination: '0000-0000'
+                            }
+                          ]
+                      };
+                    
+                  
+                      send_HTTP_Post('/move', req).then(function (response) {
+                        var res = response.data;
+                        assert.isTrue(response.statusCode == 200);
+                        assert.isTrue(res.success);
+                        assert.isEmpty(res.error);
+                        assert.isEmpty(res.message);
+                        assert.isTrue(res.httpcode == '200');
+                        done();
+                      });
+    
+                    </code>
+                  </pre>
+                  </div>
+                </div>
+              </article>
+            </article>
+            <article>
+              <br>
+              <br>
+              <article class="csecbck p">
+                <h5>copy - /copy</h5>
+                <p>
+                  Copy an asset using paNumbers. An example is copy of a record or folder to another folder.
+                </p>
+                <div class="mt-xl">
+                  <p>
+                    <div class="text-bold">Request</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td class="fw500">data</td>
+                        <td>array</td>
+                        <td>An array of key/value objects.
+                          <div>
+                            [
+                            {
+                            source: '',
+                            destination: ''
+                            }
+                            ]
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- source</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The paNumber of the asset to be copied. E.g. a folder or record paNumber.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- destination</td>
+                        <td>string</td>
+                        <td>
+                          <span class="typreq">Required</span>
+                          <span>The paNumber of the folder destination for the copy.</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </p>
+                  <p>
+                    <div class="text-bold">Response</div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td class="text-bold">Property</td>
+                          <td class="text-bold">Value</td>
+                          <td class="text-bold">Description</td>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td class="fw500">result</td>
+                        <td>array</td>
+                        <td>
+                          <div>An array of the data sent for the copy along with results per element.</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- source</td>
+                        <td>string</td>
+                        <td>
+                          <span>The paNumber of source.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- destination</td>
+                        <td>string</td>
+                        <td>
+                          <span>The paNumber of the destination.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- success</td>
+                        <td>boolean</td>
+                        <td>If the copy succeeded or not.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500 pl-lg">- error</td>
+                        <td>string</td>
+                        <td>Reason for failure.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">success</td>
+                        <td>boolean</td>
+                        <td>Indicates if the API call succeeded.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">error</td>
+                        <td>string</td>
+                        <td>An error code.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">message</td>
+                        <td>string</td>
+                        <td>Any helpful messages regarding the request.</td>
+                      </tr>
+                      <tr>
+                        <td class="fw500">httpcode</td>
+                        <td>string</td>
+                        <td>The HTTP response code.</td>
+                      </tr>
+
+                    </table>
+                  </p>
+
+
+                </div>
+                <div class="mt-xl">
+                  <div class="text-bold">Example</div>
+                  <div class=" bt">
+                    <div class="mv">
+                      <button type="button" data-code="copycode"
+                        class="btn-copy btn btn-default pull-right btn-primary">Copy Code</button>
+                    </div>
+                    <pre>
+                    <code id="copycode"> 
+                      var req = {
+                        apiKey: 'apikey',
+                        data:
+                          [
+                            {
+                              source: '0000-0000',
+                              destination: '0000-0000'
+                            },
+                            {
+                              source: '0000-0000',
+                              destination: '0000-0000'
+                            }
+                          ]
+                      };
+                    
+                  
+                      send_HTTP_Post('/copy', req).then(function (response) {
+                        var res = response.data;
+                        assert.isTrue(response.statusCode == 200);
+                        assert.isTrue(res.success);
+                        assert.isEmpty(res.error);
+                        assert.isEmpty(res.message);
+                        assert.isTrue(res.httpcode == '200');
+                        done();
+                      });
+    
+                    </code>
+                  </pre>
+                  </div>
+                </div>
+              </article>
+            </article>
+          </section>
+
+          <br><br>
 
           <section id="terms">
             <h2>Terms</h2>
@@ -1759,6 +2368,72 @@
             </article>
           </section>
 
+          <br><br>
+
+          <section id="errcodes" class="">
+            <h2>System Codes</h2>
+            <br><br>
+            <article>
+              <div class="text-bold mv">Status Codes</div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="text-bold">Property</td>
+                    <td class="text-bold">Value</td>
+                    <td class="text-bold">Description</td>
+                  </tr>
+                </thead>
+                <tr>
+                  <td class="fw500">ok</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="fw500">not_found</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="fw500">processing</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="fw500">deleted</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+
+              <br><br>
+
+              <div class="text-bold mv">Error Codes</div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="text-bold">Property</td>
+                    <td class="text-bold">Value</td>
+                    <td class="text-bold">Description</td>
+                  </tr>
+                </thead>
+                <tr>
+                  <td class="fw500">no_pa_number</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="fw500">nofilefound</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="fw500">archive_create_failed</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </article>
+          </section>
 
         </div>
       </div>
