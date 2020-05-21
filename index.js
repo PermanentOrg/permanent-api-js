@@ -42,8 +42,7 @@ function permanent(apikey) {
       add: '/record/add',
       delete: '/record/delete',
       get: '/record/get',
-      update: '/record/update',
-      getfile: '/record/getfile'
+      update: '/record/update'
     },
     folder: {
       add: '/folder/add',
