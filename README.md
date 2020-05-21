@@ -48,6 +48,11 @@ Functional Tests: npm run-script functional_tests
 
 ## Usage
 
-see the docs https://permanent-legacy-foundation.github.io/permanent-api-js/
+Set your API key to the environment variable process.env.PERMANENTORG_APIKEY  
+var permanent = require('permanent-api-js');
 
-```
+or pass API key
+var permanent = require('permanent-api-js')('YOUR_API_KEY');
+
+Then see the docs https://permanent-legacy-foundation.github.io/permanent-api-js/
+

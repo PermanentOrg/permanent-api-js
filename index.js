@@ -15,8 +15,8 @@ function permanent(apikey) {
   }
 
   var app_instance = this;
-  var _hostname = 'http://localhost:9002';
-  // var _hostname = 'https://devapi.permanent.org';
+  // var _hostname = 'http://localhost:9002';
+  var _hostname = 'https://devapi.permanent.org';
 
   var _API_KEY = apikey || process.env.PERMANENTORG_APIKEY;
   var apievents = {
