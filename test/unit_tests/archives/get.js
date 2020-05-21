@@ -15,7 +15,7 @@ describe('/archive/get', function () {
   it('should fetch an archive given an archive number', function (done) {
     var req = {
       data: {
-        paNumber: '0001-0000'  
+        paNumber: '00v1-0000'  
       }
     };
 

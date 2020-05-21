@@ -1,7 +1,7 @@
 var
   util = require("util"),
   eventEmitter = require('events').EventEmitter,
-  http = require('http'),
+  http = require('https'),
   request = require('request'),
   fs = require('fs'),
   querystring = require('querystring')
