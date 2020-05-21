@@ -48,48 +48,6 @@ Functional Tests: npm run-script functional_tests
 
 ## Usage
 
-### Create an archive
-```js
-var permanent = require('permanent-api-js');
-var myarchive = {"name":"name-of-archive"};
+see the docs https://permanent-legacy-foundation.github.io/permanent-api-js/
 
-permanent.createArchive(myarchive).then(function (permres) {
-  if (permres.success) { 
-    var myNewArchiveNumber = permres.data.archiveNbr;
-  }
-});
-```    
-
-### Upload a File
-```js
-var permanent         = require('permanent-api-js');
-var an_archive_number = 'xxxx-xxxx';
-var theFile           = request.files[0];
-
-var filereq = {
-            file: new permanent.File(theFile),
-            archive_number: an_archive_number,
-            originalname: theFile.originalname,
-            filehandle: 'filename'
-          };
-
-permanent.addFile(filereq).then(function (saveres) {
-  if (saveres.success && saveres.data) {
-   var file_archive_number = saveres.data.record.recordArchiveNumber;
-  }
-});
-
-```
-
-### Get File
-```js
-var permanent           = require('permanent-api-js');
-var file_archive_number ='xxxx-xxxx';
-
-permanent.getFile({ archive_number: file_archive_number })
-.then(function (permres) {
-  if (permres.success) {
-    var filedata = permres.data.record;
-  }
-});
 ```
