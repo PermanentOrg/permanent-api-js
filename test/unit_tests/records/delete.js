@@ -63,7 +63,7 @@ describe('/record/delete', function () {
           assert.isTrue(res.httpcode == '200');
           done();
         });
-      }, 5000);
+      }, 20000);  //allow time for processing
 
     });
 
