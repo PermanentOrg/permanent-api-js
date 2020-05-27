@@ -28,6 +28,9 @@ function permanent(apikey) {
   this.Init = false;
 
   var routes = {
+    account:{
+      get:'/account/get'
+    },
     actions: {
       move: '/move',
       copy: '/copy'
@@ -51,6 +54,14 @@ function permanent(apikey) {
       update: '/folder/update'
     }
   };
+
+  this.account={
+    get:getAccount
+  };
+
+  function getAccount(msg) {
+    return post(routes.account.get, msg);
+  }
 
   this.archive = {
     get: getArchive,

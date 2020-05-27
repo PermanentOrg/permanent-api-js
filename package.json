@@ -8,7 +8,8 @@
     "functional_tests": "mocha './test/functional_tests/*/*.js' --reporter mochawesome --reporter-options reportDir=test_results/functional_tests,reportFilename=functional_tests",
     "test": "npm run-script unit_tests && npm run-script functional_tests",
     
-    
+    "account-get": "mocha './test/unit_tests/accounts/get.js' ",
+
     "arch-add": "mocha './test/unit_tests/archives/add.js' ",
     "arch-get": "mocha './test/unit_tests/archives/get.js' ",
     "arch-delete": "mocha './test/unit_tests/archives/delete.js' --timeout 60000 ",

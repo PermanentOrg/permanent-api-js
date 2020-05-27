@@ -33,6 +33,19 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Account Get",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--timeout",
+        "999999",
+        "${workspaceFolder}/test/unit_tests/accounts/get.js"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Archive Add ",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
