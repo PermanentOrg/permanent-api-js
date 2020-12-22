@@ -1,5 +1,11 @@
 # permanent-api-js
 
+## Archived
+
+This repository is archived.  Currently, it is not being maintained or
+improved by the Permanent Legacy Foundation.  Instead, trying using
+our [SDK](https://github.com/PermanentOrg/node-sdk).
+
 ## Documentation Preview Here
 https://permanent-legacy-foundation.github.io/permanent-api-js/
 
